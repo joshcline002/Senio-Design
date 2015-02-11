@@ -22,7 +22,7 @@
   <div class="ui cards">
    <div class="card reyes">
      <div class="image">
-       <img src="https://lh3.googleusercontent.com/-wtgzJ58wvaE/AAAAAAAAAAI/AAAAAAAAAGI/UptUq6n4dUs/s120-c/photo.jpg">
+       <img src="img/reyes.JPG")>
      </div>
      <div class="content">
        <div class="header">Aaron Reyes</div>
@@ -52,7 +52,7 @@
    
    <div class="card plutt">
      <div class="image">
-       <img src="https://lh4.googleusercontent.com/-V3JmggNpzkE/VNmCz6p_-0I/AAAAAAAAAGg/gaGk8PKjC98/s200/picture004.jpg">
+       <img src="img/plutt.JPG">
      </div>
      <div class="content">
        <div class="header">Nick Plutt</div>
@@ -83,7 +83,7 @@
    
    <div class="card park">
      <div class="image">
-       <img src="https://lh4.googleusercontent.com/-p0hN34ZeFPI/AAAAAAAAAAI/AAAAAAAAAOo/WpHS_xqhswA/s120-c/photo.jpg">
+       <img src="img/park.JPG">
      </div>
      <div class="content">
        <div class="header">William Park</div>
@@ -112,7 +112,7 @@
    </div>
    <div class="card cline">
      <div class="image">
-       <img src="https://lh6.googleusercontent.com/-57Bu9gsZCbA/AAAAAAAAAAI/AAAAAAAABdI/TPB77jPeIOM/s120-c/photo.jpg">
+       <img src="img/cline.JPG">
      </div>
      <div class="content">
        <div class="header">Josh Cline</div>
@@ -142,7 +142,7 @@
  
    <div class="card gonner">
      <div class="image">
-       <img src="img/doge.jpeg">
+       <img src="img/doge.JPG">
      </div>
      <div class="content">
        <div class="header">Nick Gonner</div>
@@ -171,7 +171,7 @@
    </div>
    <div class="card kothari">
      <div class="image">
-       <img src="http://class.ece.iastate.edu/kothari/Img/kothari.gif">
+       <img src="img/kothari.JPG">
      </div>
      <div class="content">
        <div class="header">Suraj Kothari</div>
