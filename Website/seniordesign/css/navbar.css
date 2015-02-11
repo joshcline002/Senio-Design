@@ -1,0 +1,26 @@
+/*******************************
+            Global
+*******************************/
+
+html {
+  font-size: 14px;
+}
+
+
+/*******************************
+            Global
+*******************************/
+
+
+.ui.active.attached.button.launch.invite {
+    position: fixed;
+    top: 5%;
+    z-index: 500;
+    width: 80px;
+}
+
+.ui.button.attached i {
+    font-size: 2em;
+}
+
+
