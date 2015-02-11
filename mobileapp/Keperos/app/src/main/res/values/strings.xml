@@ -2,7 +2,7 @@
     <string name="app_name">Kepros</string>
 
     <string name="title_section1">Posture</string>
-    <string name="title_section2">Alarms</string>
+    <string name="title_section2">Alerts</string>
     <string name="title_section3">Data</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
