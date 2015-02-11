@@ -20,7 +20,7 @@
   
   
   <!----------JAVASCRIPT REFERENCE----------------------------------------------------------------------------------------------------------> 
- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
  <script src="Semantic/javascript/semantic.js" type="text/javascript"></script>
  <script src="javascript/navbar.js" type="text/javascript"></script>
  <script src="javascript/base.js" type="text/javascript"></script>
