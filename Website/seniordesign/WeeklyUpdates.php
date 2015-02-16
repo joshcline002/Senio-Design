@@ -28,6 +28,7 @@
 	    <a class="item" id="Week2Link" href="/seniordesign/pdfs/WeeklyReports/Week2.pdf">Week 2</a>
 	    <a class="item" id="Week3Link" href="/seniordesign/pdfs/WeeklyReports/Week3.pdf">Week 3</a>
 	    <a class="item" id="Week4Link" href="/seniordesign/pdfs/WeeklyReports/Week4.pdf">Week 4</a>
+
 	  </div>
           <div class="ui horizontal divider"><i class="warning circle icon"></i></div>
 	</div>
