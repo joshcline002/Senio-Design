@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <!-- Site Properities -->
-  <title>DEC1504 Weekly Updates</title>
+  <title>DEC1504 Documentation</title>
 
 
 </head>
@@ -16,18 +16,15 @@
   
   
   
-  <div class="ui vertical segment weeklyupdates" id="weeklyupdates">
+  <div class="ui vertical segment documentation" id="documentation">
     <div class="ui stackable center aligned page grid">
       <div class="row">
         <div class="column">
           <h1 class="ui header">
-            Weekly Updates  <i class="archive icon"></i>
+            Documentation Page <i class="archive icon"></i>
           </h1>
 	  <div class="ui huge link list">
-	    <a class="item" id="Week1Link" href="/pdfs/WeeklyReports/Week1.pdf" target="_blank">Week 1</a>
-	    <a class="item" id="Week2Link" href="/pdfs/WeeklyReports/Week2.pdf" target="_blank">Week 2</a>
-	    <a class="item" id="Week3Link" href="/pdfs/WeeklyReports/Week3.pdf" target="_blank">Week 3</a>
-	    <a class="item" id="Week4Link" href="/pdfs/WeeklyReports/Week4.pdf" target="_blank">Week 4</a>
+	    <a class="item" id="ClientProposal" href="/pdfs/ProjectSummary.pdf" target="_blank">Client Proposal</a>
 
 	  </div>
           <div class="ui horizontal divider"><i class="warning circle icon"></i></div>

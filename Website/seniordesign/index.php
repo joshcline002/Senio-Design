@@ -35,8 +35,22 @@
       <div class="row">
         <div class="column">
           <h1 class="ui header">
-            Nothing
+            Introduction
           </h1>
+	  <p class="ui paragraph">
+	   In todays world sensors are becoming prominent.
+	   They have become small enough and cheap enough to put in almost everything.
+	   This has led to an increase in wearable device capable of many different functions.
+	   This increase opens up the possibility of wearable devices to help monitor and improve our own health.
+	   This also allows medical professionals to better diagnose and treat patients
+	  </p>
+	  <p class="ui paragraph">
+	   Our goal is to create a wearable device that is able to monitor back posture through sensor data.
+	   This data will then be sent to a smartphone that will be able to analyze and interpret the data for users and medical professionals.
+	   To achieve this the data needs to be collected using sensors and a microcontroller.
+	   For this device to be practical the information needs to be sent wirelessly to a smartphone so that it can be interpreted to be useful to the user.
+	   This means that the smartphone will need an app capable of interpreting data so it can be use in different ways.
+	  </p>
           <div class="ui horizontal divider"><i class="warning circle icon"></i></div>
 	</div>
       </div>
