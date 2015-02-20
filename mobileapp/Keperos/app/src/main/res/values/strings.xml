@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Kepros</string>
 
-    <string name="title_section1">Posture</string>
-    <string name="title_section2">Alerts</string>
-    <string name="title_section3">Data</string>
+    <string name="title_section1">View Data</string>
+    <string name="title_section2">Dump Data</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
