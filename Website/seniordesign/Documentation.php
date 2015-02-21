@@ -25,7 +25,7 @@
           </h1>
 	  <div class="ui huge link list">
 	    <a class="item" id="ClientProposal" href="/pdfs/ProjectSummary.pdf" target="_blank">Client Proposal</a>
-
+            <a class="item" id="ProjectPlan" href="/pdfs/ProjectPlan.pdf" target="_blank">Project Plan</a>
 	  </div>
           <div class="ui horizontal divider"><i class="warning circle icon"></i></div>
 	</div>
