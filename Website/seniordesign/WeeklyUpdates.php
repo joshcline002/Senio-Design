@@ -29,6 +29,8 @@
 	    <a class="item" id="Week3Link" href="/pdfs/WeeklyReports/Week3.pdf" target="_blank">Week 3</a>
 	    <a class="item" id="Week4Link" href="/pdfs/WeeklyReports/Week4.pdf" target="_blank">Week 4</a>
       <a class="item" id="Week5Link" href="/pdfs/WeeklyReports/Week5.pdf" target="_blank">Week 5</a>
+      <a class="item" id="Week6Link" href="/pdfs/WeeklyReports/Week6.pdf" target="_blank">Week 6</a>
+
 
 
 	  </div>
