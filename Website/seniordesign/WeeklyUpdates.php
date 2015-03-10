@@ -31,18 +31,6 @@
       <a class="item" id="Week5Link" href="/pdfs/WeeklyReports/Week5.pdf" target="_blank">Week 5</a>
       <a class="item" id="Week6Link" href="/pdfs/WeeklyReports/Week6.pdf" target="_blank">Week 6</a>
       <a class="item" id="Week7Link" href="/pdfs/WeeklyReports/Week7.pdf" target="_blank">Week 7</a>
-
-
-=======
-      	    <a class="item" id="Week5Link" href="/pdfs/WeeklyReports/Week5.pdf" target="_blank">Week 5</a>
-      	    <a class="item" id="Week6Link" href="/pdfs/WeeklyReports/Week6.pdf" target="_blank">Week 6</a>
->>>>>>> FETCH_HEAD
-
-=======
-      	    <a class="item" id="Week5Link" href="/pdfs/WeeklyReports/Week5.pdf" target="_blank">Week 5</a>
-      	    <a class="item" id="Week6Link" href="/pdfs/WeeklyReports/Week6.pdf" target="_blank">Week 6</a>
->>>>>>> FETCH_HEAD
-
 	  </div>
           <div class="ui horizontal divider"><i class="warning circle icon"></i></div>
 	</div>
