@@ -39,6 +39,9 @@ Datasheet: https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Boards/AT
 
 Software Resources
 
+Arduino IDE for programming Pro Micro
+Site: http://arduino.cc/en/main/software
+
 Android Development Resouces
 Google Developers: https://developer.android.com/develop/index.html
 Graphing possiblities: http://stackoverflow.com/questions/9741300/charts-for-android
