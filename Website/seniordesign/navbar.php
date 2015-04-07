@@ -25,12 +25,12 @@
    
     <!------------------------------ SIDE BAR ---------------------------->
   <div class="ui large inverted vertical sidebar menu">
+
     <a class="active item home" id="homebutton" href="index.php">
       Home <i class="home icon"></i>
     </a>
-    
   
-    <a class="actiev item" id="weeklyupdates" href="WeeklyUpdates.php">
+    <a class="active item" id="weeklyupdates" href="WeeklyUpdates.php">
       Weekly Reports<i class="file pdf outline icon"></i>
     </a>
      <a class="active item" id="documentation" href="Documentation.php">

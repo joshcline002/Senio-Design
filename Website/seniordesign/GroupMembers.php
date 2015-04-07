@@ -142,7 +142,7 @@
  
    <div class="card gonner">
      <div class="image">
-       <img src="img/doge.JPG">
+       <img src="img/NickGonner.JPG">
      </div>
      <div class="content">
        <div class="header">Nick Gonner</div>

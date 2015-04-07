@@ -51,8 +51,7 @@
 	   For this device to be practical the information needs to be sent wirelessly to a smartphone so that it can be interpreted to be useful to the user.
 	   This means that the smartphone will need an app capable of interpreting data so it can be use in different ways.
 	  </p>
-          <div class="ui horizontal divider"><i class="warning circle icon"></i></div>
-	</div>
+          <div class="ui divider"></div>
       </div>
     </div>
   </div>

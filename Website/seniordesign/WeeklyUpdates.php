@@ -28,11 +28,17 @@
 	    <a class="item" id="Week2Link" href="/pdfs/WeeklyReports/Week2.pdf" target="_blank">Week 2</a>
 	    <a class="item" id="Week3Link" href="/pdfs/WeeklyReports/Week3.pdf" target="_blank">Week 3</a>
 	    <a class="item" id="Week4Link" href="/pdfs/WeeklyReports/Week4.pdf" target="_blank">Week 4</a>
-      <a class="item" id="Week5Link" href="/pdfs/WeeklyReports/Week5.pdf" target="_blank">Week 5</a>
-      <a class="item" id="Week6Link" href="/pdfs/WeeklyReports/Week6.pdf" target="_blank">Week 6</a>
-      <a class="item" id="Week7Link" href="/pdfs/WeeklyReports/Week7.pdf" target="_blank">Week 7</a>
-	  </div>
-          <div class="ui horizontal divider"><i class="warning circle icon"></i></div>
+     	    <a class="item" id="Week5Link" href="/pdfs/WeeklyReports/Week5.pdf" target="_blank">Week 5</a>
+     	    <a class="item" id="Week6Link" href="/pdfs/WeeklyReports/Week6.pdf" target="_blank">Week 6</a>
+     	    <a class="item" id="Week7Link" href="/pdfs/WeeklyReports/Week7.pdf" target="_blank">Week 7</a>
+     	    <a class="item" id="Week8Link" href="/pdfs/WeeklyReports/Week8.pdf" target="_blank">Week 8-9</a>
+      	    <a class="item" id="Week10Link" href="/pdfs/WeeklyReports/Week10.pdf" target="_blank">Week 10</a>
+ 	    <a class="item" id="Week11Link" href="/pdfs/WeeklyReports/Week11.pdf" target="_blank">Week 11</a>
+
+
+	 
+    	</div>
+             <div class="ui divider"></div>
 	</div>
       </div>
     </div>

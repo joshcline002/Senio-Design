@@ -31,13 +31,6 @@ html {
     text-align: center;
 }
 
-.ui.vertical.segment.documentation{
-    width: 100%;
-    top: 150px;
-    position:absolute;
-    text-align: center;
-}
-
 ui.vertical.segment.groupmembers{
     width: 100%;
     top: 150px;
