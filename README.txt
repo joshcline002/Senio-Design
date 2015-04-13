@@ -32,7 +32,7 @@ Muscle Sensor V3 and cables
 Example Code: https://github.com/AdvancerTechnologies/Muscle-Sensor-v3/
 
 Pro Micro
-Page with Arduino IDE add-on Files: https://www.sparkfun.com/products/12587
+Page with Arduino IDE add-on Files: https://www.sparkfun.com/products/12587 or git hub page https://github.com/sparkfun/SF32u4_boards
 Firmware Notes: https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Boards/32U4Note.pdf
 Datasheet: https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Boards/ATMega32U4.pdf
 
