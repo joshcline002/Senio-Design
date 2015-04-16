@@ -19,7 +19,7 @@
 
 #define CS1 6  //arbitrary chip select pin
 
-void setup(){
+void SPIsetup(){
   SPI.setClockDivider(SPI_CLOCK_DIV8); //SPI clock at 1Mhz
   SPI.setBitOrder(MSBFIRST);
   SPI.setDataMode(SPI_MODE0); //not sure about this line, arduino is not very clear
@@ -30,7 +30,7 @@ void setup(){
   Serial.begin(9600);
 }
 
-void loop()
+void SPIprint()
 {
   //Get X-axis data
   int X_axis = readIMUAxis(ACCEL_X_H, ACCEL_X_L, CS1);
