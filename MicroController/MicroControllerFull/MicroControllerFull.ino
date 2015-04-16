@@ -1,11 +1,16 @@
+#define CS1 6  //arbitrary chip select pin
+
 void setup()
 {
-  SPIsetup();
+  SPIsetup(CS1);
+  Bluetoothsetup();
   Serial.begin(9600);
 }
 
 void loop()
 {
-  EMGprint();
-  SPIprint(); 
+  Serial.print("EMG1 : ");
+  EMGprint(A0);
+  Serial.print("IMU1 : ");
+  SPIprint(CS1);
 }
