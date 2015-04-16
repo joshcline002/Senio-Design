@@ -10,7 +10,9 @@ html {
 /*******************************
             Global
 *******************************/
-
+.ui.paragraph{
+  font-size: 1.25em;
+}
 
 .ui.inverted.masthead.segment.header{
     width: 100%;
