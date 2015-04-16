@@ -45,6 +45,7 @@ Site: http://arduino.cc/en/main/software
 Android Development Resouces
 Google Developers: https://developer.android.com/develop/index.html
 Graphing possiblities: http://stackoverflow.com/questions/9741300/charts-for-android
+Android Resource Links: https://github.com/anirudh24seven/android-dev-readme/blob/master/README.md
 
 Webserver
 TBD
