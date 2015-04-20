@@ -41,5 +41,5 @@ void I2Cprint(int MPU){
   Serial.print(" | GyX = "); Serial.print(GyX/65.5);
   Serial.print(" | GyY = "); Serial.print(GyY/65.5);
   Serial.print(" | GyZ = "); Serial.print(GyZ/65.5);
-  delay(333);
+  delay(200);
 }

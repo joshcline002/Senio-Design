@@ -12,8 +12,8 @@ void setup()
 void loop()
 {
   Serial.print("EMG1 : ");
-  //EMGprint(A0);
-  Serial.print("IMU1 : ");
+  EMGprint(A0);
+  Serial.print(" IMU1 : ");
   I2Cprint(IMU2);
   Serial.println(" ");
 }
