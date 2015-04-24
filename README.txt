@@ -36,27 +36,10 @@ Page with Arduino IDE add-on Files: https://www.sparkfun.com/products/12587 or g
 Firmware Notes: https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Boards/32U4Note.pdf
 Datasheet: https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Dev/Arduino/Boards/ATMega32U4.pdf
 
-
-Software Resources
-
-Arduino IDE for programming Pro Micro
-Site: http://arduino.cc/en/main/software
-
-Android Development Resouces
-Google Developers: https://developer.android.com/develop/index.html
-Graphing possiblities: http://stackoverflow.com/questions/9741300/charts-for-android
-Android Resource Links: https://github.com/anirudh24seven/android-dev-readme/blob/master/README.md
-
 Webserver
 TBD
 
 Database
 TBD
-
-Graphing Code for Arduino
-http://www.arduino.cc/en/Tutorial/Graph?action=sourceblock&num=1
-(Use megunolink to graph outputs)
-http://www.megunolink.com/downloads/download-megunolink-pro/
-
 
 
