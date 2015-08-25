@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Kepros</string>
 
-    <string name="title_section1">View Data</string>
-    <string name="title_section2">Dump Data</string>
+    <string name="graph_data_section">Graphs and Data</string>
+    <string name="home_section1">Home</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
 </resources>

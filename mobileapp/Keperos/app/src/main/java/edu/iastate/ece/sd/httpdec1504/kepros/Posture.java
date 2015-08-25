@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class Posture extends ActionBarActivity
@@ -49,20 +51,36 @@ public class Posture extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+
+        Fragment objFragment = null;
+
+        switch(position){
+            case 0:
+                objFragment = new homePage_Fragment();
+                Log.d("HOME", "Home Menu Fragment Initiated!");
+
+                break;
+            case 1:
+                objFragment = new viewData_Fragment();
+                Log.d("GRAPHSDATA", "Graphs and Data Menu Fragment Initiated!");
+
+                break;
+
+        }
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, objFragment)
                 .commit();
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
+            case 0:
+                mTitle = getString(R.string.home_section1);
                 break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
+            case 1:
+                mTitle = getString(R.string.graph_data_section);
                 break;
         }
     }
@@ -94,9 +112,21 @@ public class Posture extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Fragment objFragment = null;
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            Log.d("SETTINGS", "Setting Menu Fragment Initiated!");
+
+            objFragment = new settingsPage_Fragment();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, objFragment)
+                    .commit();
+
             return true;
         }
 
