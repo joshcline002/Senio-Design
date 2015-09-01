@@ -46,11 +46,11 @@ public class Bluetooth extends android.app.Activity{
         // take an instance of BluetoothAdapter - Bluetooth radio
         myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(myBluetoothAdapter == null) {
-           // buttonBTon.setEnabled(false);
-            //buttonBToff.setEnabled(false);
-            //pairedbtList.setEnabled(false);
-            //searchbuttonBTFind.setEnabled(false);
-            //textbluetooth.setText("Status: not supported");
+            buttonBTon.setEnabled(false);
+            buttonBToff.setEnabled(false);
+            pairedbtList.setEnabled(false);
+            searchbuttonBTFind.setEnabled(false);
+            textbluetooth.setText("Status: not supported");
 
             Toast.makeText(getApplicationContext(), "Your device does not support Bluetooth",
                     Toast.LENGTH_LONG).show();
