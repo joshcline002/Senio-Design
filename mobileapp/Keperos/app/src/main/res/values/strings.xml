@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Kepros</string>
 
     <string name="graph_data_section">Graphs and Data</string>
     <string name="home_section1">Home</string>
@@ -8,6 +7,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
+    <string name="app_name">Kepros</string>
     <string name="action_settings">Settings</string>
+    <string name="textBluetooth">Status: -</string>
+    <string name="buttonBTon">Turn On</string>
+    <string name="buttonBToff">Turn Off</string>
+    <string name="btList">List paired Devices</string>
+    <string name="buttonBTFind">Search new Devices / Cancel</string>
+    <string name="buttonBTSwitch">Settings</string>
+
 </resources>

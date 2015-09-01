@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#e0e0e0"
+    android:id="@+id/settings_frame">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Settings"
-        android:id="@+id/textView2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+    <FrameLayout
+            android:layout_width="321dp"
+            android:layout_height="163dp"
+            android:layout_gravity="center_horizontal|top"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/headerBluetooth"
+                android:layout_gravity="left|center_vertical"
+                android:text="Bluetooth"
+                android:textColor="#010101"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="@string/buttonBTSwitch"
+                android:id="@+id/buttonBTSwitch"
+                android:layout_gravity="center" />
+
+
+
+        </FrameLayout>
+
 </RelativeLayout>
+

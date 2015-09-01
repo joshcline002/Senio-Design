@@ -12,6 +12,7 @@ import android.view.ViewGroup;
  */
 public class viewData_Fragment extends android.support.v4.app.Fragment {
     View rootview;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

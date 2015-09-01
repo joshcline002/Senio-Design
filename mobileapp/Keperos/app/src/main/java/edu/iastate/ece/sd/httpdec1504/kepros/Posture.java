@@ -1,6 +1,7 @@
 package edu.iastate.ece.sd.httpdec1504.kepros;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 
 public class Posture extends ActionBarActivity
@@ -113,6 +115,8 @@ public class Posture extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Fragment objFragment = null;
+        FragmentActivity objFragmentAct = null;
+
 
 
         //noinspection SimplifiableIfStatement
@@ -121,6 +125,7 @@ public class Posture extends ActionBarActivity
             Log.d("SETTINGS", "Setting Menu Fragment Initiated!");
 
             objFragment = new settingsPage_Fragment();
+
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
