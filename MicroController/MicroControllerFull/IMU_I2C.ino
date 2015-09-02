@@ -34,12 +34,12 @@ void I2Cprint(int MPU){
   GyX=Wire.read()<<8|Wire.read();  // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
   GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-  Serial.print("AcX = "); Serial.print(AcX/8192.0);
-  Serial.print(" | AcY = "); Serial.print(AcY/8192.0);
-  Serial.print(" | AcZ = "); Serial.print(AcZ/8192.0);
-  Serial.print(" | Tmp = "); Serial.print((Tmp/340.00+36.53)*9/5 + 32);  //equation for temperature in degrees C from datasheet
-  Serial.print(" | GyX = "); Serial.print(GyX/65.5);
-  Serial.print(" | GyY = "); Serial.print(GyY/65.5);
-  Serial.print(" | GyZ = "); Serial.print(GyZ/65.5);
+  Serial1.print("AcX = "); Serial1.print(AcX/8192.0);
+  Serial1.print(" | AcY = "); Serial1.print(AcY/8192.0);
+  Serial1.print(" | AcZ = "); Serial1.print(AcZ/8192.0);
+  Serial1.print(" | Tmp = "); Serial1.print((Tmp/340.00+36.53)*9/5 + 32);  //equation for temperature in degrees C from datasheet
+  Serial1.print(" | GyX = "); Serial1.print(GyX/65.5);
+  Serial1.print(" | GyY = "); Serial1.print(GyY/65.5);
+  Serial1.print(" | GyZ = "); Serial1.print(GyZ/65.5);
   delay(200);
 }
