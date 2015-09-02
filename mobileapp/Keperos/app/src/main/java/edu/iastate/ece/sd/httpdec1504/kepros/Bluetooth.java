@@ -55,7 +55,13 @@ public class Bluetooth extends android.app.Activity{
             Toast.makeText(getApplicationContext(), "Your device does not support Bluetooth",
                     Toast.LENGTH_LONG).show();
         } else {
+            int State = myBluetoothAdapter.getState();
             textbluetooth = (TextView) findViewById(R.id.textbluetooth);
+            if (State == 10) {
+                textbluetooth.setText("Status: Disabled");
+            } else if (State == 12){
+                textbluetooth.setText("Status: Enabled");
+            }
             buttonBTon = (Button)findViewById(R.id.buttonBTon);
             buttonBTon.setOnClickListener(new View.OnClickListener() {
 
@@ -141,10 +147,11 @@ public class Bluetooth extends android.app.Activity{
         pairedDevices = myBluetoothAdapter.getBondedDevices();
 
         // put it's one to the adapter
-        for(BluetoothDevice device : pairedDevices)
-            BTArrayAdapter.add(device.getName()+ "\n" + device.getAddress());
-
-        Toast.makeText(getApplicationContext(),"Show Paired Devices",
+        for(BluetoothDevice device : pairedDevices) {
+            BTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+            BTArrayAdapter.notifyDataSetChanged();
+        }
+        Toast.makeText(getApplicationContext(),"Showing Paired Devices",
                 Toast.LENGTH_SHORT).show();
 
     }
@@ -161,6 +168,7 @@ public class Bluetooth extends android.app.Activity{
                 BTArrayAdapter.notifyDataSetChanged();
             }
         }
+
     };
 
 
@@ -168,12 +176,16 @@ public class Bluetooth extends android.app.Activity{
         if (myBluetoothAdapter.isDiscovering()) {
             // the button is pressed when it discovers, so cancel the discovery
             myBluetoothAdapter.cancelDiscovery();
+            Toast.makeText(getApplicationContext(), "Cancel Search",
+                    Toast.LENGTH_SHORT).show();
         }
         else {
             BTArrayAdapter.clear();
             myBluetoothAdapter.startDiscovery();
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(bReceiver, filter);
+            Toast.makeText(getApplicationContext(), "Showing Found Devices",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -185,11 +197,11 @@ public class Bluetooth extends android.app.Activity{
                 Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onDestroy() {
+    //@Override
+    //public void onDestroy() {
         // TODO Auto-generated method stub
-        super.onDestroy();
-        unregisterReceiver(bReceiver);
-    }
+    //    super.onDestroy();
+    //    unregisterReceiver(bReceiver);
+    //}
 
 }

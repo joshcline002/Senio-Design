@@ -12,8 +12,8 @@
     <string name="textBluetooth">Status: -</string>
     <string name="buttonBTon">Turn On</string>
     <string name="buttonBToff">Turn Off</string>
-    <string name="btList">List paired Devices</string>
-    <string name="buttonBTFind">Search new Devices / Cancel</string>
+    <string name="btList">List Paired Devices</string>
+    <string name="buttonBTFind">Search New Devices / Cancel</string>
     <string name="buttonBTSwitch">Settings</string>
 
 </resources>
