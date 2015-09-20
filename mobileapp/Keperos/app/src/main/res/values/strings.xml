@@ -14,6 +14,13 @@
     <string name="buttonBToff">Turn Off</string>
     <string name="btList">List Paired Devices</string>
     <string name="buttonBTFind">Search New Devices / Cancel</string>
+
     <string name="buttonBTSwitch">Settings</string>
+
+    <string name="buttonDataOn">Data Recieve</string>
+    <string name="buttonDataOff">Data Disconnect</string>
+    <string name="bluetoothDataRec">Data = ????</string>
+
+
 
 </resources>

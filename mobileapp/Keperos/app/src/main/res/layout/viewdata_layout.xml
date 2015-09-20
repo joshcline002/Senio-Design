@@ -9,4 +9,49 @@
         android:id="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="136dp" />
+
+
+    <TextView
+        android:id="@+id/bluetoothDataLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bluetoothString"
+        android:text=""
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/bluetoothString"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/bluetoothDataLog"
+        android:layout_alignParentBottom="true"
+        android:text=""
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/buttonDataOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Data Recieve" />
+
+    <Button
+        android:id="@+id/buttonDataOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonDataOn"
+        android:layout_alignParentRight="true"
+        android:text="Data Disconnect" />
+
+
+
+    <TextView
+        android:id="@+id/bluetoothDataRec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="196dp"
+        android:text="Data = ????"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 </RelativeLayout>
