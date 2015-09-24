@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,6 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
 
 
 
-    final int handlerState = 0;
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private BluetoothDevice myBTDevice;
@@ -55,6 +55,25 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     private TextView text;
     private ArrayAdapter<String> CheckAdapter;
     ListView list;
+
+    private InputStream mmInStream;
+    private OutputStream mmOutStream;
+
+    // Will Attempt
+
+    Handler bluetoothHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+                String readMessage = (String) msg.obj.toString();
+                recDataString.append(readMessage);
+                 mylist.add(String.valueOf(recDataString));
+                 recDataString.delete(0, recDataString.length());                    //clear all string data
+                }
+        };
+
+
+
+
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -74,7 +93,6 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.viewdata_layout, container, false);
         return rootview;
-
 
     }
 
@@ -100,7 +118,8 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         }
         CheckAdapter.add(MY_UUID.toString());
 
-        mHandler.postDelayed(stringToList, 10);
+        //mHandler.postDelayed(stringToList, 10);
+        bluetoothHandler.postDelayed(stringToList, 10);
         ConnectThread();
         run();
     }
@@ -143,6 +162,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
             // until it succeeds or throws an exception
             btSocket.connect();
             mylist.add("btSocket.connect();");
+            Log.d("BLUETOOTHSOCKET", "Bluetooth Socket Connected!");
             thread.start();
         } catch (IOException connectException) {
             // Unable to connect; close the socket and get out
@@ -163,14 +183,34 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     }
 
     public void manageConnectedSocket(){
+        InputStream tmpIn = null;
+        OutputStream tmpOut = null;
 
-        byte[] buffer = new byte[1024];  // buffer store for the stream
-        int bytes; // bytes returned from read()
+       // byte[] buffer = new byte[1024];  // buffer store for the stream
+       // int bytes; // bytes returned from read()
         while (true) {
             try {
-                bytes = btSocket.getInputStream().read(buffer);
-                mHandler.obtainMessage(1, bytes, -1, buffer)
-                        .sendToTarget();
+                byte[] buffer = new byte[1024];  // buffer store for the stream
+
+                tmpIn = btSocket.getInputStream();
+                tmpOut = btSocket.getOutputStream();
+                mmInStream = tmpIn;
+                mmOutStream = tmpOut;
+
+                int bytes = mmInStream.read(buffer);
+                //Log.i("NumOfBytes", "read nbytes: " + bytes);
+
+                String readMessage = new String(buffer, 0, bytes);
+                //Log.d("readmessage stuff", readMessage);
+                bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
+               //  mylist.add("Woooooop"); // If there is no myList add calll... then it doesnt show data. which makes no sense
+                // i lied
+
+                //   bytes = btSocket.getInputStream().read(buffer);
+                //Log.d("ReadingBytes", "What should be inputed here im not sure");
+               // mHandler.obtainMessage(1, bytes, -1, buffer)
+                 //       .sendToTarget();
+                //bluetoothHandler.obtainMessage(1, bytes, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 break;
             }
@@ -183,7 +223,8 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 CheckAdapter.add(mylist.get(i));
             }
             mylist.clear();
-            mHandler.postDelayed(stringToList, 10);
+           // mHandler.postDelayed(stringToList, 10);
+            bluetoothHandler.postDelayed(stringToList, 10);
         }
     };
 
