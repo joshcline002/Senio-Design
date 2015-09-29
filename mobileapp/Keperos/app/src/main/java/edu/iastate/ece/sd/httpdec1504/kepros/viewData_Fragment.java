@@ -22,6 +22,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -114,30 +115,29 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
             btAdapter = BluetoothAdapter.getDefaultAdapter();
             MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
             Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
-        // If there are paired devices
+            // If there are paired devices
             if (pairedDevices.size() > 0) {
                 // Loop through paired devices
                 for (BluetoothDevice device : pairedDevices) {
-                    if(device.getName().compareTo("Posture") == 0) {
-                        myBTDevice=device;
+                    if (device.getName().compareTo("Posture") == 0) {
+                        myBTDevice = device;
                     }
                 }
             }
-            connectThread.start();
+            if (!(myBTDevice == null)) {
+                connectThread.start();
+            } else {
+                Toast.makeText(getContext(), "Not Paired", Toast.LENGTH_SHORT).show();
+                list.setVisibility(View.GONE);
+                btn.setVisibility(View.VISIBLE);
+            }
         }
     };
 
     private Thread thread = new Thread() {
         @Override
-        public void run() {
-            try {
-                while (true) {
-                    sleep(10);
-                    manageConnectedSocket();;
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        public void start() {
+                    manageConnectedSocket();
         }
     };
 
@@ -198,6 +198,11 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
        // byte[] buffer = new byte[1024];  // buffer store for the stream
        // int bytes; // bytes returned from read()
         while (true) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             try {
                     byte[] buffer = new byte[1024];  // buffer store for the stream
                     tmpIn = btSocket.getInputStream();
