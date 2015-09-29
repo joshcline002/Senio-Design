@@ -47,6 +47,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     private TextView text;
     private ArrayAdapter<String> CheckAdapter;
     ListView list;
+    Button btn;
 
     private InputStream mmInStream;
     private OutputStream mmOutStream;
@@ -57,8 +58,12 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         @Override
         public void handleMessage(android.os.Message msg) {
                 recDataString.append(msg.obj.toString());
-                 mylist.add(String.valueOf(recDataString));
-                 recDataString.delete(0, recDataString.length());                    //clear all string data
+                 if(String.valueOf(recDataString).equals(";")) {
+                     bluetoothHandler.postDelayed(stringToList, 1);
+                 } else {
+                     mylist.add(String.valueOf(recDataString));
+                 }
+                recDataString.delete(0, recDataString.length()); //clear all string data
                 }
         };
 
@@ -84,16 +89,23 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.viewdata_layout, container, false);
         CheckAdapter = new ArrayAdapter<String>(rootview.getContext(), android.R.layout.simple_list_item_1);
+        btn = (Button) rootview.findViewById(R.id.startButton);
+        list = (ListView) rootview.findViewById(R.id.datalist);
+        list.setAdapter(CheckAdapter);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.setVisibility(View.VISIBLE);
+                btn.setVisibility(View.GONE);
+                init.start();
+            }
+        });
         return rootview;
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-        list = (ListView) rootview.findViewById(R.id.datalist);
-        list.setAdapter(CheckAdapter);
-        init.start();
-        bluetoothHandler.postDelayed(stringToList, 10);
     }
 
     private Thread init = new Thread(){
@@ -164,6 +176,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
             try {
                 btSocket.close();
                 Log.d("BLUETOOTHSOCKET", "Bluetooth Socket Closed!");
+                connectThread.start();
             } catch (IOException closeException) {
             }
             return;
@@ -186,19 +199,18 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
        // int bytes; // bytes returned from read()
         while (true) {
             try {
-                byte[] buffer = new byte[1024];  // buffer store for the stream
+                    byte[] buffer = new byte[1024];  // buffer store for the stream
+                    tmpIn = btSocket.getInputStream();
+                    tmpOut = btSocket.getOutputStream();
+                    mmInStream = tmpIn;
+                    mmOutStream = tmpOut;
+                    int bytes = mmInStream.read(buffer);
+                    //Log.i("NumOfBytes", "read nbytes: " + bytes);
 
-                tmpIn = btSocket.getInputStream();
-                tmpOut = btSocket.getOutputStream();
-                mmInStream = tmpIn;
-                mmOutStream = tmpOut;
-
-                int bytes = mmInStream.read(buffer);
-                //Log.i("NumOfBytes", "read nbytes: " + bytes);
-
-                String readMessage = new String(buffer, 0, bytes);
-                //Log.d("readmessage stuff", readMessage);
-                bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
+                    String readMessage = new String(buffer, 0, bytes);
+                    //Log.d("readmessage stuff", readMessage);
+                    bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
+                    Log.d("CONNECTED", "YEP ");
                //  mylist.add("Woooooop"); // If there is no myList add calll... then it doesnt show data. which makes no sense
                 // i lied
 
@@ -215,12 +227,17 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
 
     private Runnable stringToList = new Runnable() {
         public void run() {
+            StringBuilder readings = new StringBuilder();
             for (int i = 0; i<mylist.size(); i++) {
-                CheckAdapter.add(mylist.get(i));
+                readings.append(mylist.get(i));
             }
+            CheckAdapter.add(String.valueOf(readings));
+            if(CheckAdapter.getCount()>100){
+                CheckAdapter.clear();
+            }
+            CheckAdapter.notifyDataSetChanged();
             mylist.clear();
-           // mHandler.postDelayed(stringToList, 10);
-            bluetoothHandler.postDelayed(stringToList, 10);
+            list.setSelection(CheckAdapter.getCount()-1);
         }
     };
 }

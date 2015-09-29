@@ -27,5 +27,5 @@ void loop()
   EMGprint(A0);
   Serial1.print(" IMU1 : ");
   I2Cprint(IMU2);
-  Serial1.println(" ");
+  Serial1.println(";");
 }
