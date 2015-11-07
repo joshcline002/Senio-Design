@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Scanner;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -50,10 +51,22 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     ListView list;
     Button btn;
 
+    public float[][] EMGdata1 = new float [100][1];  // EMG Data is ... 1 number? not sure.
+    public float[][] EMGdata2 = new float [100][1];
+
+    public float[][] IMUdata1 = new float [100][6]; // IMU data holding 100 values of 6, AclX | AclY | AclZ | GyX | GyY | GyZ
+    public float[][] IMUdata2 = new float [100][6];
+
+    String stringtoParse = "";
+
+    public int numberCount = 7; // start it at outside number from switch statements
+    public int dataCount = 0; // start at array indicator 0. go to 100 then change to 0
+    public boolean switchCount = false;
+
+
     private InputStream mmInStream;
     private OutputStream mmOutStream;
 
-    // Will Attempt
 
     Handler bluetoothHandler = new Handler() {
         @Override
@@ -62,7 +75,99 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                  if(String.valueOf(recDataString).equals(";")) {
                      bluetoothHandler.postDelayed(stringToList, 1);
                  } else {
-                     mylist.add(String.valueOf(recDataString));
+                     stringtoParse = String.valueOf(recDataString);
+                     mylist.add(stringtoParse);
+                    /* int i = 0;
+                     int x = 0;
+                     String[] tempArray = stringtoParse.split("\\s+");
+
+                     x = tempArray.length;
+
+                     Scanner scan = new Scanner(stringtoParse);
+                     float tempVal = 0;
+                     for (i = 0; i < x ; i++)
+                     {
+                         tempVal = Float.valueOf(tempArray[i]);
+
+                         if(tempVal == 9999)
+                         {
+                             numberCount = 0; // hits the 9999 value and then starts the number counter to catch data
+                         } else
+                         {
+                             switch(numberCount)
+                             {
+                                 case 0:
+                                     // EMG
+                                     if (switchCount == false)
+                                     {EMGdata1[dataCount][0] = tempVal;
+                                     }else {
+                                         EMGdata2[dataCount][0] = tempVal;
+                                     }
+                                     break;
+                                 case 1:
+                                     // AcelX
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][0] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][0] = tempVal;
+                                     }
+                                     break;
+                                 case 2:
+                                     // AcelY
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][1] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][1] = tempVal;
+                                     }
+                                     break;
+                                 case 3:
+                                     // Acel Z
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][2] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][2] = tempVal;
+                                     }
+                                     break;
+                                 case 4:
+                                     // Gy X
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][3] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][3] = tempVal;
+                                     }
+                                     break;
+                                 case 5:
+                                     // Gy Y
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][4] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][4] = tempVal;
+                                     }
+                                     break;
+                                 case 6:
+                                     // Gy Z
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][5] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][5] = tempVal;
+                                     }
+                                     break;
+                                 default:
+                                     // What
+                                     break;
+                             }
+
+                             if(numberCount == 6)
+                             {
+                                 dataCount++;
+                             }
+                             if (dataCount == 101)
+                             {
+                                 dataCount = 0;
+                                 switchCount = !switchCount;
+                             }
+                         }
+                     }*/
                  }
                 recDataString.delete(0, recDataString.length()); //clear all string data
                 }
