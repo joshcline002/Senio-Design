@@ -2,19 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:text="CONNECT AND RUN"/>
+
+    <Button
+        android:id="@+id/calibrateButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text=""/>
+
     <ListView
         android:id="@+id/datalist"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:isScrollContainer="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_below="@id/calibrateButton">
     </ListView>
 
     <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/listButton"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="CONNECT AND RUN"/>
+        android:visibility="gone"
+        android:layout_below="@+id/calibrateButton"
+        android:text="Show List"/>
+
+    <TextView
+        android:id="@+id/calibrate_Countdown"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/calibrateButton"
+        android:text="5"
+        />
+
 
 
 </RelativeLayout>
