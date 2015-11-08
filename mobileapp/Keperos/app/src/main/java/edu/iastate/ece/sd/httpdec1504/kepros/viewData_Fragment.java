@@ -77,7 +77,6 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     Handler bluetoothHandler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
-<<<<<<< HEAD
             recDataString.append(msg.obj.toString());
             if(String.valueOf(recDataString).equals(";")) {
                 bluetoothHandler.postDelayed(stringToList, 1);
@@ -87,14 +86,9 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 try{
                     startGraphing(String.valueOf(recDataString));
                 }
-                catch(InterruptedException e){
-=======
-                recDataString.append(msg.obj.toString());
-                 if(String.valueOf(recDataString).equals(";")) {
-                     bluetoothHandler.postDelayed(stringToList, 1);
-                 } else {
-                     stringtoParse = String.valueOf(recDataString);
-                     mylist.add(stringtoParse);
+                catch(InterruptedException e) {
+                }
+
                     /* int i = 0;
                      int x = 0;
                      String[] tempArray = stringtoParse.split("\\s+");
@@ -188,99 +182,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                      }*/
                  }
                 recDataString.delete(0, recDataString.length()); //clear all string data
->>>>>>> origin/master
                 }
-
-                    /* int i = 0;
-                     int x = 0;
-                     String[] tempArray = stringtoParse.split("\\s+");
-                     x = tempArray.length;
-                     Scanner scan = new Scanner(stringtoParse);
-                     float tempVal = 0;
-                     for (i = 0; i < x ; i++)
-                     {
-                         tempVal = Float.valueOf(tempArray[i]);
-                         if(tempVal == 9999)
-                         {
-                             numberCount = 0; // hits the 9999 value and then starts the number counter to catch data
-                         } else
-                         {
-                             switch(numberCount)
-                             {
-                                 case 0:
-                                     // EMG
-                                     if (switchCount == false)
-                                     {EMGdata1[dataCount][0] = tempVal;
-                                     }else {
-                                         EMGdata2[dataCount][0] = tempVal;
-                                     }
-                                     break;
-                                 case 1:
-                                     // AcelX
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][0] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][0] = tempVal;
-                                     }
-                                     break;
-                                 case 2:
-                                     // AcelY
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][1] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][1] = tempVal;
-                                     }
-                                     break;
-                                 case 3:
-                                     // Acel Z
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][2] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][2] = tempVal;
-                                     }
-                                     break;
-                                 case 4:
-                                     // Gy X
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][3] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][3] = tempVal;
-                                     }
-                                     break;
-                                 case 5:
-                                     // Gy Y
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][4] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][4] = tempVal;
-                                     }
-                                     break;
-                                 case 6:
-                                     // Gy Z
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][5] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][5] = tempVal;
-                                     }
-                                     break;
-                                 default:
-                                     // What
-                                     break;
-                             }
-                             if(numberCount == 6)
-                             {
-                                 dataCount++;
-                             }
-                             if (dataCount == 101)
-                             {
-                                 dataCount = 0;
-                                 switchCount = !switchCount;
-                             }
-                         }
-                     }*/
-            }
-            recDataString.delete(0, recDataString.length()); //clear all string data
-        }
     };
 
     public void startGraphing(String s) throws InterruptedException {
