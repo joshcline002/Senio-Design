@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import android.bluetooth.BluetoothAdapter;
@@ -24,6 +25,9 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import org.w3c.dom.Text;
 
 /**
@@ -46,7 +50,11 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     private BluetoothDevice myBTDevice;
     private UUID MY_UUID;
     private TextView text;
+    private int yIndex = 0;
     private ArrayAdapter<String> CheckAdapter;
+    LineGraphSeries<DataPoint> series1 = new LineGraphSeries<DataPoint>();
+    LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>();
+
     ListView list;
     Button btn;
 
@@ -63,12 +71,30 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                      bluetoothHandler.postDelayed(stringToList, 1);
                  } else {
                      mylist.add(String.valueOf(recDataString));
+                     try{
+                         startGraphing(String.valueOf(recDataString));
+                     }
+                     catch(InterruptedException e){
+                     }
+
+
                  }
                 recDataString.delete(0, recDataString.length()); //clear all string data
-                }
-        };
+        }
+    };
 
-
+    public void startGraphing(String s) throws InterruptedException {
+        /*Need to parse the string into the correct parts for the graph
+          and then decide what parts go to what graphs.*/
+        //Gets the graphs
+        GraphView graph1 = (GraphView) getView().findViewById(R.id.graph1);
+        GraphView graph2 = (GraphView) getView().findViewById(R.id.graph2);
+        //Sets the new data point
+        series1.appendData(new DataPoint(1,2), true, 10);
+        series2.appendData(new DataPoint(1,2), true, 10);
+        graph1.addSeries(series1);
+        graph2.addSeries(series1);
+    }
 
 
     private Handler mHandler = new Handler(){
