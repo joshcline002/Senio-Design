@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Scanner;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
 import org.w3c.dom.Text;
 
 /**
@@ -50,43 +51,137 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     private BluetoothDevice myBTDevice;
     private UUID MY_UUID;
     private TextView text;
-    private int yIndex = 0;
     private ArrayAdapter<String> CheckAdapter;
     LineGraphSeries<DataPoint> series1 = new LineGraphSeries<DataPoint>();
     LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>();
-
     ListView list;
     Button btn;
+
+    public float[][] EMGdata1 = new float [100][1];  // EMG Data is ... 1 number? not sure.
+    public float[][] EMGdata2 = new float [100][1];
+
+    public float[][] IMUdata1 = new float [100][6]; // IMU data holding 100 values of 6, AclX | AclY | AclZ | GyX | GyY | GyZ
+    public float[][] IMUdata2 = new float [100][6];
+
+    String stringtoParse = "";
+
+    public int numberCount = 7; // start it at outside number from switch statements
+    public int dataCount = 0; // start at array indicator 0. go to 100 then change to 0
+    public boolean switchCount = false;
+
 
     private InputStream mmInStream;
     private OutputStream mmOutStream;
 
-    // Will Attempt
 
     Handler bluetoothHandler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
-                recDataString.append(msg.obj.toString());
-                 if(String.valueOf(recDataString).equals(";")) {
-                     bluetoothHandler.postDelayed(stringToList, 1);
-                 } else {
-                     mylist.add(String.valueOf(recDataString));
-                     try{
-                         startGraphing(String.valueOf(recDataString));
-                     }
-                     catch(InterruptedException e){
-                     }
+            recDataString.append(msg.obj.toString());
+            if(String.valueOf(recDataString).equals(";")) {
+                bluetoothHandler.postDelayed(stringToList, 1);
+            } else {
+                stringtoParse = String.valueOf(recDataString);
+                mylist.add(stringtoParse);
+                try{
+                    startGraphing(String.valueOf(recDataString));
+                }
+                catch(InterruptedException e){
+                }
 
-
-                 }
-                recDataString.delete(0, recDataString.length()); //clear all string data
+                    /* int i = 0;
+                     int x = 0;
+                     String[] tempArray = stringtoParse.split("\\s+");
+                     x = tempArray.length;
+                     Scanner scan = new Scanner(stringtoParse);
+                     float tempVal = 0;
+                     for (i = 0; i < x ; i++)
+                     {
+                         tempVal = Float.valueOf(tempArray[i]);
+                         if(tempVal == 9999)
+                         {
+                             numberCount = 0; // hits the 9999 value and then starts the number counter to catch data
+                         } else
+                         {
+                             switch(numberCount)
+                             {
+                                 case 0:
+                                     // EMG
+                                     if (switchCount == false)
+                                     {EMGdata1[dataCount][0] = tempVal;
+                                     }else {
+                                         EMGdata2[dataCount][0] = tempVal;
+                                     }
+                                     break;
+                                 case 1:
+                                     // AcelX
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][0] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][0] = tempVal;
+                                     }
+                                     break;
+                                 case 2:
+                                     // AcelY
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][1] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][1] = tempVal;
+                                     }
+                                     break;
+                                 case 3:
+                                     // Acel Z
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][2] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][2] = tempVal;
+                                     }
+                                     break;
+                                 case 4:
+                                     // Gy X
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][3] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][3] = tempVal;
+                                     }
+                                     break;
+                                 case 5:
+                                     // Gy Y
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][4] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][4] = tempVal;
+                                     }
+                                     break;
+                                 case 6:
+                                     // Gy Z
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][5] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][5] = tempVal;
+                                     }
+                                     break;
+                                 default:
+                                     // What
+                                     break;
+                             }
+                             if(numberCount == 6)
+                             {
+                                 dataCount++;
+                             }
+                             if (dataCount == 101)
+                             {
+                                 dataCount = 0;
+                                 switchCount = !switchCount;
+                             }
+                         }
+                     }*/
+            }
+            recDataString.delete(0, recDataString.length()); //clear all string data
         }
     };
 
     public void startGraphing(String s) throws InterruptedException {
-        /*Need to parse the string into the correct parts for the graph
-          and then decide what parts go to what graphs.*/
-        //Gets the graphs
         GraphView graph1 = (GraphView) getView().findViewById(R.id.graph1);
         GraphView graph2 = (GraphView) getView().findViewById(R.id.graph2);
         //Sets the new data point
@@ -97,10 +192,11 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     }
 
 
+
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-           mylist.add((String)msg.obj);
+            mylist.add((String)msg.obj);
         }
     };
 
@@ -163,7 +259,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     private Thread thread = new Thread() {
         @Override
         public void start() {
-                    manageConnectedSocket();
+            manageConnectedSocket();
         }
     };
 
@@ -186,28 +282,28 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     };
 
     private Thread run = new Thread(){
-    @Override
-    public void start() {
-        // Cancel discovery because it will slow down the connection
-        btAdapter.cancelDiscovery();
+        @Override
+        public void start() {
+            // Cancel discovery because it will slow down the connection
+            btAdapter.cancelDiscovery();
 
-        try {
-            // Connect the device through the socket. This will block
-            // until it succeeds or throws an exception
-            btSocket.connect();
-            Log.d("BLUETOOTHSOCKET", "Bluetooth Socket Connected!");
-            thread.start();
-        } catch (IOException connectException) {
-            // Unable to connect; close the socket and get out
             try {
-                btSocket.close();
-                Log.d("BLUETOOTHSOCKET", "Bluetooth Socket Closed!");
-                connectThread.start();
-            } catch (IOException closeException) {
+                // Connect the device through the socket. This will block
+                // until it succeeds or throws an exception
+                btSocket.connect();
+                Log.d("BLUETOOTHSOCKET", "Bluetooth Socket Connected!");
+                thread.start();
+            } catch (IOException connectException) {
+                // Unable to connect; close the socket and get out
+                try {
+                    btSocket.close();
+                    Log.d("BLUETOOTHSOCKET", "Bluetooth Socket Closed!");
+                    connectThread.start();
+                } catch (IOException closeException) {
+                }
+                return;
             }
-            return;
         }
-    }
     };
 
     /** Will cancel an in-progress connection, and close the socket */
@@ -221,8 +317,8 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
 
-       // byte[] buffer = new byte[1024];  // buffer store for the stream
-       // int bytes; // bytes returned from read()
+        // byte[] buffer = new byte[1024];  // buffer store for the stream
+        // int bytes; // bytes returned from read()
         while (true) {
             try {
                 Thread.sleep(10);
@@ -230,25 +326,25 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 e.printStackTrace();
             }
             try {
-                    byte[] buffer = new byte[1024];  // buffer store for the stream
-                    tmpIn = btSocket.getInputStream();
-                    tmpOut = btSocket.getOutputStream();
-                    mmInStream = tmpIn;
-                    mmOutStream = tmpOut;
-                    int bytes = mmInStream.read(buffer);
-                    //Log.i("NumOfBytes", "read nbytes: " + bytes);
+                byte[] buffer = new byte[1024];  // buffer store for the stream
+                tmpIn = btSocket.getInputStream();
+                tmpOut = btSocket.getOutputStream();
+                mmInStream = tmpIn;
+                mmOutStream = tmpOut;
+                int bytes = mmInStream.read(buffer);
+                //Log.i("NumOfBytes", "read nbytes: " + bytes);
 
-                    String readMessage = new String(buffer, 0, bytes);
-                    //Log.d("readmessage stuff", readMessage);
-                    bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
-                    Log.d("CONNECTED", "YEP ");
-               //  mylist.add("Woooooop"); // If there is no myList add calll... then it doesnt show data. which makes no sense
+                String readMessage = new String(buffer, 0, bytes);
+                //Log.d("readmessage stuff", readMessage);
+                bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
+                Log.d("CONNECTED", "YEP ");
+                //  mylist.add("Woooooop"); // If there is no myList add calll... then it doesnt show data. which makes no sense
                 // i lied
 
                 //   bytes = btSocket.getInputStream().read(buffer);
                 //Log.d("ReadingBytes", "What should be inputed here im not sure");
-               // mHandler.obtainMessage(1, bytes, -1, buffer)
-                 //       .sendToTarget();
+                // mHandler.obtainMessage(1, bytes, -1, buffer)
+                //       .sendToTarget();
                 //bluetoothHandler.obtainMessage(1, bytes, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 break;
