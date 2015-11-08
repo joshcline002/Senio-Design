@@ -54,6 +54,9 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     private ArrayAdapter<String> CheckAdapter;
     LineGraphSeries<DataPoint> series1 = new LineGraphSeries<DataPoint>();
     LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>();
+    GraphView graph1;
+    GraphView graph2;
+    int x = 0;
     ListView list;
     Button btn;
 
@@ -78,16 +81,18 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         @Override
         public void handleMessage(android.os.Message msg) {
             recDataString.append(msg.obj.toString());
+            Log.d("Handler", "Msg Handler");
+            try{
+                startGraphing(String.valueOf(recDataString));
+            }
+            catch(InterruptedException e) {
+                Log.d("ERROR", "GRAPH ERROR");
+            }
             if(String.valueOf(recDataString).equals(";")) {
                 bluetoothHandler.postDelayed(stringToList, 1);
             } else {
                 stringtoParse = String.valueOf(recDataString);
                 mylist.add(stringtoParse);
-                try{
-                    startGraphing(String.valueOf(recDataString));
-                }
-                catch(InterruptedException e) {
-                }
 
                     /* int i = 0;
                      int x = 0;
@@ -185,15 +190,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 }
     };
 
-    public void startGraphing(String s) throws InterruptedException {
-        GraphView graph1 = (GraphView) getView().findViewById(R.id.graph1);
-        GraphView graph2 = (GraphView) getView().findViewById(R.id.graph2);
-        //Sets the new data point
-        series1.appendData(new DataPoint(1,2), true, 10);
-        series2.appendData(new DataPoint(1,2), true, 10);
-        graph1.addSeries(series1);
-        graph2.addSeries(series1);
-    }
+
 
 
 
@@ -219,6 +216,8 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         btn = (Button) rootview.findViewById(R.id.startButton);
         list = (ListView) rootview.findViewById(R.id.datalist);
         list.setAdapter(CheckAdapter);
+        graph1 = (GraphView) rootview.findViewById(R.id.graph1);
+        graph2 = (GraphView) rootview.findViewById(R.id.graph2);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,6 +232,16 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
+    }
+
+    public void startGraphing(String s) throws InterruptedException {
+        Log.d("Graphing", "In Graphing");
+        //Sets the new data point
+        series1.appendData(new DataPoint(x,1), true, 10);
+        series2.appendData(new DataPoint(x,1), true, 10);
+        graph1.addSeries(series1);
+        graph2.addSeries(series1);
+        x ++;
     }
 
     private Thread init = new Thread(){
@@ -339,9 +348,9 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 //Log.i("NumOfBytes", "read nbytes: " + bytes);
 
                 String readMessage = new String(buffer, 0, bytes);
-                //Log.d("readmessage stuff", readMessage);
+                Log.d("readmessage stuff", readMessage);
                 bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
-                Log.d("CONNECTED", "YEP ");
+                //Log.d("Message", readMessage);
                 //  mylist.add("Woooooop"); // If there is no myList add calll... then it doesnt show data. which makes no sense
                 // i lied
 
