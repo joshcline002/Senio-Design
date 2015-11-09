@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Scanner;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -58,6 +59,21 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     int x = 0;
     Button btn;
 
+
+    public int[][] EMGdata1 = new int [100][1];  // EMG Data is ... 1 number? not sure.
+    public int[][] EMGdata2 = new int [100][1];
+
+    public int[][] IMUdata1 = new int [100][6]; // IMU data holding 100 values of 6, AclX | AclY | AclZ | GyX | GyY | GyZ
+    public int[][] IMUdata2 = new int [100][6];
+
+    String stringtoParse = "";
+
+    public int numberCount = 7; // start it at outside number from switch statements
+    public int dataCount = 0; // start at array indicator 0. go to 100 then change to 0
+    public boolean switchCount = false;
+
+
+
     private InputStream mmInStream;
     private OutputStream mmOutStream;
 
@@ -67,12 +83,157 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         @Override
         public void handleMessage(android.os.Message msg) {
                 recDataString.append(msg.obj.toString());
-                series1.appendData(new DataPoint(x, 1), true, 200);//Just Change the Y value Not X
+               /* series1.appendData(new DataPoint(x, 1), true, 200);//Just Change the Y value Not X
                 series2.appendData(new DataPoint(x, 1), true, 200);
                 series3.appendData(new DataPoint(x, 2), true, 200);
-                series4.appendData(new DataPoint(x, 3), true, 200);
-                x ++;
-                recDataString.delete(0, recDataString.length()); //clear all string data
+                series4.appendData(new DataPoint(x, 3), true, 200); */
+               // x ++;
+
+                stringtoParse = String.valueOf(recDataString);
+                //Log.d("StringtoParse", stringtoParse);
+
+                     int i = 0;
+                     int y = 0;
+                     String[] tempArray = stringtoParse.split("\\s+");
+                     //  String[] tempArray = stringtoParse.split("\\s+");
+
+                     y = tempArray.length;
+
+                     Scanner scan = new Scanner(stringtoParse);
+                     int tempVal = 0;
+                    // float tempVal = 0;
+                     for (i = 0; i < y ; i++)
+                     {
+                         if(tempArray[i] == null || tempArray[i] == " " || tempArray[i] == "" || tempArray[i] == "\n" || tempArray[i] == "\t"){
+                             // do nothing
+                         }
+                         else{
+                             //tempVal = Float.valueOf(tempArray[i]);
+                             if(tempArray[i] == "")
+                             {
+                                 // do nothing
+                             }
+                             else{
+                                 tempVal = Integer.parseInt(tempArray[i]);
+                                 //Log.d("tempVal", String.valueOf(tempVal));
+                             }
+
+                         }
+
+                         if(tempVal == 999)
+                         {
+                             numberCount = 0; // hits the 9999 value and then starts the number counter to catch data
+                         }
+
+                        // Log.d("dataCount", String.valueOf(dataCount));
+                             switch(numberCount)
+                             {
+                                 case 1:
+                                     // EMG
+                                     if (switchCount == false)
+                                     { //Log.d("EMG DATA ADD", String.valueOf(tempVal));
+                                         EMGdata1[dataCount][0] = tempVal;
+                                         series1.appendData(new DataPoint(x, tempVal), true, 200);
+                                     }else {
+                                         EMGdata2[dataCount][0] = tempVal;
+                                         series1.appendData(new DataPoint(x, tempVal), true, 200);
+                                     }
+                                     break;
+                                 case 2:
+                                     // AcelX
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][0] = tempVal;
+                                         series2.appendData(new DataPoint(x, tempVal), true, 200);
+
+                                     } else {
+                                         IMUdata2[dataCount][0] = tempVal;
+                                         series2.appendData(new DataPoint(x, tempVal), true, 200);
+
+                                     }
+                                     break;
+                                 case 3:
+                                     // AcelY
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][1] = tempVal;
+                                         series3.appendData(new DataPoint(x, tempVal), true, 200);
+
+                                     } else {
+                                         IMUdata2[dataCount][1] = tempVal;
+                                         series3.appendData(new DataPoint(x, tempVal), true, 200);
+
+                                     }
+                                     break;
+                                 case 4:
+                                     // Acel Z
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][2] = tempVal;
+                                         series4.appendData(new DataPoint(x, tempVal), true, 200);
+
+                                     } else {
+                                         IMUdata2[dataCount][2] = tempVal;
+                                         series4.appendData(new DataPoint(x, tempVal), true, 200);
+
+                                     }
+                                     break;
+                                 case 5:
+                                     // Gy X
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][3] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][3] = tempVal;
+                                     }
+                                     break;
+                                 case 6:
+                                     // Gy Y
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][4] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][4] = tempVal;
+                                     }
+                                     break;
+                                 case 7:
+                                     // Gy Z
+                                     if (switchCount == false)
+                                     {IMUdata1[dataCount][5] = tempVal;
+                                     } else {
+                                         IMUdata2[dataCount][5] = tempVal;
+                                     }
+                                     break;
+                                 default:
+                                     // What
+                                     break;
+                             }
+
+                             if(numberCount == 7)
+                             {
+                                 if(switchCount == true)
+                                 {
+                                     Log.d("Parse Array 2", "EMG: " +  String.valueOf(EMGdata2[dataCount][0]) + " ACLx: " + String.valueOf(IMUdata2[dataCount][0])+ " ACLy: " + String.valueOf(IMUdata2[dataCount][1])+ " ACLz: " + String.valueOf(IMUdata2[dataCount][2]) + " GYx: " + String.valueOf(IMUdata2[dataCount][3]) + " GYy: " + String.valueOf(IMUdata2[dataCount][4]) + " GYz: " + String.valueOf(IMUdata2[dataCount][5])  );
+                                 } else
+                                 {
+                                     Log.d("Parse Array 1", "EMG: " +  String.valueOf(EMGdata1[dataCount][0]) + " ACLx: " + String.valueOf(IMUdata1[dataCount][0])+ " ACLy: " + String.valueOf(IMUdata1[dataCount][1])+ " ACLz: " + String.valueOf(IMUdata1[dataCount][2]) + " GYx: " + String.valueOf(IMUdata1[dataCount][3]) + " GYy: " + String.valueOf(IMUdata1[dataCount][4]) + " GYz: " + String.valueOf(IMUdata1[dataCount][5])  );
+                                 }
+                                 dataCount++;
+                                 numberCount = 0;
+                             }
+                             if (dataCount == 100)
+                             {
+                                 dataCount = 0;
+                                 switchCount = !switchCount;
+                             }
+
+                         numberCount++;
+                         x ++;
+
+
+
+                     }
+
+
+
+
+
+            recDataString.delete(0, recDataString.length()); //clear all string data
                 }
         };
 
@@ -203,18 +364,19 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 // byte[] buffer = new byte[1024];  // buffer store for the stream
                 // int bytes; // bytes returned from read()
                 while (true) {
-                    Log.d("Here", "Here");
+                   // Log.d("Here", "Here");
                     try {
                         byte[] buffer = new byte[1024];  // buffer store for the stream
                         tmpIn = btSocket.getInputStream();
                         tmpOut = btSocket.getOutputStream();
                         mmInStream = tmpIn;
                         mmOutStream = tmpOut;
+                        Thread.sleep(1500);
                         int bytes = mmInStream.read(buffer);
                         //Log.i("NumOfBytes", "read nbytes: " + bytes);
 
                         String readMessage = new String(buffer, 0, bytes);
-                        Log.d("readmessage stuff", readMessage);
+                        Log.d("Data from Buffer", readMessage);
                         bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
                         //  mylist.add("Woooooop"); // If there is no myList add calll... then it doesnt show data. which makes no sense
                         // i lied
@@ -226,8 +388,10 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                         //bluetoothHandler.obtainMessage(1, bytes, -1, buffer).sendToTarget();
                     } catch (IOException e) {
 
+                } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
         }
     };
 
