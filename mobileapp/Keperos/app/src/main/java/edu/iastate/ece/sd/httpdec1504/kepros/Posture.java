@@ -67,6 +67,9 @@ public class Posture extends ActionBarActivity
                 Log.d("GRAPHSDATA", "Graphs and Data Menu Fragment Initiated!");
 
                 break;
+            case 2:
+                objFragment = new viewOldData_Fragment();
+                Log.d("OLDGRAPHSDATA", "Old Graphs and Data Menu Fragment Initiated!");
 
         }
         // update the main content by replacing fragments
@@ -83,6 +86,9 @@ public class Posture extends ActionBarActivity
                 break;
             case 1:
                 mTitle = getString(R.string.graph_data_section);
+                break;
+            case 2:
+                mTitle = getString(R.string.old_graphs);
                 break;
         }
     }

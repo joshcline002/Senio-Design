@@ -36,7 +36,7 @@ import org.w3c.dom.Text;
 public class viewData_Fragment extends android.support.v4.app.Fragment {
 
     View rootview;
-
+    ViewGroup view;
     Button btDataOn, btDataOff;
     TextView txtArduino, txtString, txtStringLength, bluetoothDataRec;
     Handler bluetoothIn;
@@ -449,4 +449,6 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
             btSocket.close();
         } catch (IOException e) { }
     }
+
+
 }
