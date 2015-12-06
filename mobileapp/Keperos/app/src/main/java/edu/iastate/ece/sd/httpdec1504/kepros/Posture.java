@@ -64,12 +64,12 @@ public class Posture extends ActionBarActivity
                 break;
             case 1:
                 objFragment = new viewData_Fragment();
-                Log.d("GRAPHSDATA", "Graphs and Data Menu Fragment Initiated!");
+                Log.d("get_data_section", "Graphs and Data Menu Fragment Initiated!");
 
                 break;
             case 2:
                 objFragment = new viewOldData_Fragment();
-                Log.d("OLDGRAPHSDATA", "Old Graphs and Data Menu Fragment Initiated!");
+                Log.d("graph_data_Section", "Old Graphs and Data Menu Fragment Initiated!");
 
         }
         // update the main content by replacing fragments
@@ -85,10 +85,10 @@ public class Posture extends ActionBarActivity
                 mTitle = getString(R.string.home_section1);
                 break;
             case 1:
-                mTitle = getString(R.string.graph_data_section);
+                mTitle = getString(R.string.get_data_section);
                 break;
             case 2:
-                mTitle = getString(R.string.old_graphs);
+                mTitle = getString(R.string.graph_data_section);
                 break;
         }
     }

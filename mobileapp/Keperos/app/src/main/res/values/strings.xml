@@ -1,8 +1,9 @@
 <resources>
 
-    <string name="graph_data_section">Graphs and Data</string>
-    <string name="old_graphs">Past Graph View</string>
+    <string name="get_data_section">Real Time Data</string>
     <string name="home_section1">Home</string>
+    <string name="graph_data_section">Graph Stored Data</string>
+
     <string name="from_date">From Date mm.dd.yy</string>
     <string name="to_date">To Date mm.dd.yy</string>
     <string name="from_time">From Time hh:mm</string>

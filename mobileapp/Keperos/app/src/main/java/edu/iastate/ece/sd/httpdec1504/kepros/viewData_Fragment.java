@@ -1,5 +1,6 @@
 package edu.iastate.ece.sd.httpdec1504.kepros;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -269,6 +270,9 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         graph2.getViewport().setMaxX(200);
         graph2.getViewport().setMinX(0);
         graph1.getViewport().setScrollable(true);
+        series2.setColor(Color.RED);
+        series3.setColor(Color.BLUE);
+        series4.setColor(Color.GREEN);
         x =0;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,44 +282,6 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
             }
         });
 
-       /* list_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calibrate_btn.setText("Recalibrate");
-                list_btn.setVisibility(View.GONE);
-                CheckAdapter.clear();
-                CheckAdapter.notifyDataSetChanged();
-                list.setVisibility(View.VISIBLE);
-            }
-        });
-
-        calibrate_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calibrate_btn.setVisibility(View.GONE);
-                calibrate_btn.setText("Recalibrate");
-                list_btn.setVisibility(View.GONE);
-                count.setVisibility(View.VISIBLE);
-                try {
-                    Thread.sleep(1000);
-                    count.setText(4);
-                    Thread.sleep(1000);
-                    count.setText(3);
-                    Thread.sleep(1000);
-                    count.setText(2);
-                    Thread.sleep(1000);
-                    count.setText(1);
-                    CheckAdapter.clear();
-                    CheckAdapter.notifyDataSetChanged();
-                    calibrate_btn.setVisibility(View.VISIBLE);
-                    list.setVisibility(View.VISIBLE);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        });*/
         return rootview;
     }
 
@@ -378,14 +344,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                         String readMessage = new String(buffer, 0, bytes);
                         Log.d("Data from Buffer", readMessage);
                         bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
-                        //  mylist.add("Woooooop"); // If there is no myList add calll... then it doesnt show data. which makes no sense
-                        // i lied
 
-                        //   bytes = btSocket.getInputStream().read(buffer);
-                        //Log.d("ReadingBytes", "What should be inputed here im not sure");
-                        // mHandler.obtainMessage(1, bytes, -1, buffer)
-                        //       .sendToTarget();
-                        //bluetoothHandler.obtainMessage(1, bytes, -1, buffer).sendToTarget();
                     } catch (IOException e) {
 
                 } catch (InterruptedException e) {

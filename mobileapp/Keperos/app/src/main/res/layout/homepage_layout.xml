@@ -6,7 +6,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="HomePagev.06"
+        android:text="                Future Wearables\n\n
+Team:    Aaron Reyes, Josh Cline,\n
+               Will Park, Nick Plutt,\n
+               Nick Gonner\n\n
+Clients: Ted Kepros, Kepros\n
+                Physical Therapy\n
+               Jeremias Sauceda, Ensoft\n\n
+Advisor: Dr. Suraj Kothari"
         android:id="@+id/textView2"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
