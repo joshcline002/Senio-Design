@@ -25,13 +25,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         public static final String COLUMN_EMG1 = "LEMG";
         public static final String COLUMN_EMG2 = "REMG";
 
-        public static final String COLUMN_TOP_ACCEL_X = "TOPX";
-        public static final String COLUMN_TOP_ACCEL_Y = "TOPY";
-        public static final String COLUMN_TOP_ACCEL_Z = "TOPZ";
-
-        public static final String COLUMN_BOT_ACCEL_X = "BOTX";
-        public static final String COLUMN_BOT_ACCEL_Y = "BOTY";
-        public static final String COLUMN_BOT_ACCEL_Z = "BOTZ";
+        public static final String COLUMN_FORWARD_BEND = "ACCELY";
+        public static final String COLUMN_FORWARD_CURVE = "ACCELZ";
+        public static final String COLUMN_SIDE_CURVE = "ACCELX";
 
         public static final String COLUMN_DEGREE_X = "GYROX";
         public static final String COLUMN_DEGREE_Y = "GYROY";
@@ -49,12 +45,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 + COLUMN_DEGREE_X + " INTEGER, "
                 + COLUMN_DEGREE_Y + " INTEGER, "
                 + COLUMN_DEGREE_Z + " INTEGER, "
-                + COLUMN_TOP_ACCEL_X + " REAL, "
-                + COLUMN_TOP_ACCEL_Y + " REAL, "
-                + COLUMN_TOP_ACCEL_Z + " REAL, "
-                + COLUMN_BOT_ACCEL_X + " REAL, "
-                + COLUMN_BOT_ACCEL_Y + " REAL, "
-                + COLUMN_BOT_ACCEL_Z + " REAL)";
+                + COLUMN_FORWARD_BEND + " INTEGER, "
+                + COLUMN_FORWARD_CURVE + " INTEGER,"
+                + COLUMN_SIDE_CURVE + " INTEGER)";
 
 
     /**
@@ -96,7 +89,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
      * @param time
      * @param EMG1
      */
-        public void createPosture(double time, int EMG1, int EMG2, int DEGREEX, int DEGREEY, int DEGREEZ, double TOPX, double TOPY, double TOPZ, double BOTX, double BOTY, double BOTZ){
+        public void createPosture(double time, int EMG1, int EMG2, int DEGREEX, int DEGREEY, int DEGREEZ, int FORWARDBEND, int FORWARDCURVE, int SIDECURVE){
 
             SQLiteDatabase db = this.getWritableDatabase();
                 ContentValues values = new ContentValues();
@@ -106,12 +99,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                     values.put(COLUMN_DEGREE_X, DEGREEX);
                     values.put(COLUMN_DEGREE_Y, DEGREEY);
                     values.put(COLUMN_DEGREE_Z, DEGREEZ);
-                    values.put(COLUMN_TOP_ACCEL_X, TOPX);
-                    values.put(COLUMN_TOP_ACCEL_Y, TOPY);
-                    values.put(COLUMN_TOP_ACCEL_Z, TOPZ);
-                    values.put(COLUMN_BOT_ACCEL_X, BOTX);
-                    values.put(COLUMN_BOT_ACCEL_Y, BOTY);
-                    values.put(COLUMN_BOT_ACCEL_Z, BOTZ);
+                    values.put(COLUMN_FORWARD_BEND, FORWARDBEND);
+                    values.put(COLUMN_FORWARD_CURVE, FORWARDCURVE);
+                    values.put(COLUMN_SIDE_CURVE, SIDECURVE);
 
             db.insert(TABLE_POSTURE, null, values);
         }
@@ -164,8 +154,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return REMG;
     }
 
-    public double[] getTOPACCELX(double startTime, double endTime){
-        String selectQuery = "SELECT " + COLUMN_TOP_ACCEL_X + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
+    public double[] getFORWARDBEND(double startTime, double endTime){
+        String selectQuery = "SELECT " + COLUMN_FORWARD_BEND + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         int size = c.getCount();
@@ -174,7 +164,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         //
         if (c.moveToFirst()){
             do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_TOP_ACCEL_X));
+                read[i] = c.getDouble(c.getColumnIndex(COLUMN_FORWARD_BEND));
                 i++;
             } while (c.moveToNext());
         }
@@ -182,8 +172,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return read;
     }
 
-    public double[] getTOPACCELY(double startTime, double endTime){
-        String selectQuery = "SELECT " + COLUMN_TOP_ACCEL_Y + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
+    public double[] getFORWARDCURVE(double startTime, double endTime){
+        String selectQuery = "SELECT " + COLUMN_FORWARD_CURVE + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         int size = c.getCount();
@@ -192,7 +182,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         //
         if (c.moveToFirst()){
             do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_TOP_ACCEL_Y));
+                read[i] = c.getDouble(c.getColumnIndex(COLUMN_FORWARD_CURVE));
                 i++;
             } while (c.moveToNext());
         }
@@ -200,8 +190,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return read;
     }
 
-    public double[] getTOPACCELZ(double startTime, double endTime){
-        String selectQuery = "SELECT " + COLUMN_TOP_ACCEL_Z + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
+    public double[] getSIDECURVE(double startTime, double endTime){
+        String selectQuery = "SELECT " + COLUMN_SIDE_CURVE + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         int size = c.getCount();
@@ -210,7 +200,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         //
         if (c.moveToFirst()){
             do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_TOP_ACCEL_Z));
+                read[i] = c.getDouble(c.getColumnIndex(COLUMN_SIDE_CURVE));
                 i++;
             } while (c.moveToNext());
         }
@@ -271,58 +261,4 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         c.close();
         return read;
     }
-
-    public double[] getBOTACCELX(double startTime, double endTime){
-        String selectQuery = "SELECT " + COLUMN_BOT_ACCEL_X + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-        int size = c.getCount();
-        double[] read = new double[size];
-        int i =0;
-        //
-        if (c.moveToFirst()){
-            do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_BOT_ACCEL_X));
-                i++;
-            } while (c.moveToNext());
-        }
-        c.close();
-        return read;
-    }
-
-    public double[] getBOTACCELY(double startTime, double endTime){
-        String selectQuery = "SELECT " + COLUMN_BOT_ACCEL_Y + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-        int size = c.getCount();
-        double[] read = new double[size];
-        int i =0;
-        //
-        if (c.moveToFirst()){
-            do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_BOT_ACCEL_Y));
-                i++;
-            } while (c.moveToNext());
-        }
-        c.close();
-        return read;
-    }
-
-    public double[] getBOTACCELZ(double startTime, double endTime){
-        String selectQuery = "SELECT " + COLUMN_BOT_ACCEL_Z + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-        int size = c.getCount();
-        double[] read = new double[size];
-        int i =0;
-        //
-        if (c.moveToFirst()){
-            do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_BOT_ACCEL_Z));
-                i++;
-            } while (c.moveToNext());
-        }
-        c.close();
-        return read;
-    }
-    }
+}

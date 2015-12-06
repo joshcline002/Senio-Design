@@ -273,9 +273,16 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         graph2.getViewport().setMaxX(200);
         graph2.getViewport().setMinX(0);
         graph1.getViewport().setScrollable(true);
+
+        //EMG1 == green EMG2 == red
+        series1.setColor(Color.GREEN);
         series2.setColor(Color.RED);
+
+        //DegreeX == BLUE DegreeY == GREEN DegreeZ == RED
         series3.setColor(Color.BLUE);
         series4.setColor(Color.GREEN);
+        series5.setColor(Color.RED);
+
         x =0;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -348,34 +355,28 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
 
                         Log.d("Number of Bytes ", " " + bytes);
 
-                        if(bytes >= 19) {
+                        if(bytes > 10) {
 
-                            int EMG1 = ((cpyBuffer[bytes-19] << 8) | cpyBuffer[bytes-18]);
+                            int EMG1 = ((cpyBuffer[bytes-11] << 8) | cpyBuffer[bytes-10]);
                             Log.d("EMG1 ", " " + EMG1);
-                            int EMG2 = ((cpyBuffer[bytes-17] << 8) | cpyBuffer[bytes-16]);
+                            int EMG2 = ((cpyBuffer[bytes-9] << 8) | cpyBuffer[bytes-8]);
                             Log.d("EMG2 ", " " + EMG2);
-                            int DEGREEX = cpyBuffer[bytes-15];
-                            Log.d("DEGREEX ", " " + DEGREEX);
-                            int DEGREEY = cpyBuffer[bytes-14];
-                            Log.d("DEGREEY ", " " + DEGREEY);
-                            int DEGREEZ = cpyBuffer[bytes-13];
-                            Log.d("DEGREEZ ", " " + DEGREEZ);
-                            double TOPX = ((cpyBuffer[bytes-12] << 8) | cpyBuffer[bytes-11]);
-                            Log.d("TOPX ", " " + TOPX);
-                            double TOPY = ((cpyBuffer[bytes-10] << 8) | cpyBuffer[bytes-9]);
-                            Log.d("TOPY ", " " + TOPY);
-                            double TOPZ = ((cpyBuffer[bytes-8] << 8) | cpyBuffer[bytes-7]);
-                            Log.d("TOPZ ", " " + TOPZ);
-                            double BOTX = ((cpyBuffer[bytes-6] << 8) | cpyBuffer[bytes-5]);
-                            Log.d("BOTX ", " " + BOTX);
-                            double BOTY = ((cpyBuffer[bytes-4] << 8) | cpyBuffer[bytes-3]);
-                            Log.d("BOTY ", " " + BOTY);
-                            double BOTZ = ((cpyBuffer[bytes-2] << 8) | cpyBuffer[bytes-1]);
-                            Log.d("BOTZ ", " " + BOTZ);
+                            int GYRO_DEGREE_X = cpyBuffer[bytes-7];
+                            Log.d("GYRO DEGREE X ", " " + GYRO_DEGREE_X);
+                            int GYRO_DEGREE_Y = cpyBuffer[bytes-6];
+                            Log.d("GYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
+                            int GYRO_DEGREE_Z = cpyBuffer[bytes-5];
+                            Log.d("GYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
+                            int FORWARD_BEND = cpyBuffer[bytes-4];
+                            Log.d("FORWARD BEND ", " " + FORWARD_BEND);
+                            int FORWARD_CURVE = cpyBuffer[bytes-3];
+                            Log.d("FORWARD_CURVE ", " " + FORWARD_CURVE);
+                            int SIDE_CURVE = cpyBuffer[bytes-2];
+                            Log.d("SIDE CURVE ", " " + SIDE_CURVE);
 
                             bluetoothHandler.obtainMessage(1, bytes, -1, cpyBuffer).sendToTarget();
 
-                            db.createPosture(System.currentTimeMillis(), EMG1, EMG2, DEGREEX, DEGREEY, DEGREEZ, TOPX, TOPY, TOPZ, BOTX, BOTY, BOTZ);
+                            db.createPosture(System.currentTimeMillis(), EMG1, EMG2, GYRO_DEGREE_X, GYRO_DEGREE_Y, GYRO_DEGREE_Z, FORWARD_BEND, FORWARD_CURVE, SIDE_CURVE);
                             thread.wait(50);
                         }
                     } catch (IOException e) {
