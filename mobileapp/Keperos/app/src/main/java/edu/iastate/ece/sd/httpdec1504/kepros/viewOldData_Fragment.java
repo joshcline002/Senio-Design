@@ -117,6 +117,19 @@ public class viewOldData_Fragment extends android.support.v4.app.Fragment {
 
                    series1 = sql.methodName(startTimeMS, endTimeMS);
                  */
+                    int[] LEMG = sql.getLEMG(startTimeMS, endTimeMS);
+                    int[] REMG = sql.getREMG(startTimeMS, endTimeMS);
+                    int[] DEGREEX = sql.getDEGREEX(startTimeMS, endTimeMS);
+                    int[] DEGREEY = sql.getDEGREEY(startTimeMS, endTimeMS);
+                    int[] DEGREEZ = sql.getDEGREEZ(startTimeMS, endTimeMS);
+
+                for (int i = 0; i < LEMG.length; i++){
+                    series1.appendData(new DataPoint(i, LEMG[i]), true, 200);
+                    series2.appendData(new DataPoint(i, REMG[i]), true, 200);
+                    series3.appendData(new DataPoint(i, DEGREEX[i]), true, 200);
+                    series4.appendData(new DataPoint(i, DEGREEY[i]), true, 200);
+                    series5.appendData(new DataPoint(i, DEGREEZ[i]), true, 200);
+                }
             }
         });
     }

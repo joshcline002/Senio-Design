@@ -341,26 +341,42 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                         tmpOut = btSocket.getOutputStream();
                         mmInStream = tmpIn;
                         mmOutStream = tmpOut;
-                        Thread.sleep(1500);
                         int bytes = mmInStream.read(buffer);
                         //Log.i("NumOfBytes", "read nbytes: " + bytes);
 
                         byte[] cpyBuffer = buffer;
+
                         Log.d("Number of Bytes ", " " + bytes);
+
                         if(bytes >= 19) {
-                            int EMG1;
-                            int EMG2;
-                            int DEGREEX;
-                            int DEGREEY;
-                            int DEGREEZ;
-                            double TOPX;
-                            double TOPY;
-                            double TOPZ;
-                            double BOTX;
-                            double BO
+
+                            int EMG1 = ((cpyBuffer[bytes-19] << 8) | cpyBuffer[bytes-18]);
+                            Log.d("EMG1 ", " " + EMG1);
+                            int EMG2 = ((cpyBuffer[bytes-17] << 8) | cpyBuffer[bytes-16]);
+                            Log.d("EMG2 ", " " + EMG2);
+                            int DEGREEX = cpyBuffer[bytes-15];
+                            Log.d("DEGREEX ", " " + DEGREEX);
+                            int DEGREEY = cpyBuffer[bytes-14];
+                            Log.d("DEGREEY ", " " + DEGREEY);
+                            int DEGREEZ = cpyBuffer[bytes-13];
+                            Log.d("DEGREEZ ", " " + DEGREEZ);
+                            double TOPX = ((cpyBuffer[bytes-12] << 8) | cpyBuffer[bytes-11]);
+                            Log.d("TOPX ", " " + TOPX);
+                            double TOPY = ((cpyBuffer[bytes-10] << 8) | cpyBuffer[bytes-9]);
+                            Log.d("TOPY ", " " + TOPY);
+                            double TOPZ = ((cpyBuffer[bytes-8] << 8) | cpyBuffer[bytes-7]);
+                            Log.d("TOPZ ", " " + TOPZ);
+                            double BOTX = ((cpyBuffer[bytes-6] << 8) | cpyBuffer[bytes-5]);
+                            Log.d("BOTX ", " " + BOTX);
+                            double BOTY = ((cpyBuffer[bytes-4] << 8) | cpyBuffer[bytes-3]);
+                            Log.d("BOTY ", " " + BOTY);
+                            double BOTZ = ((cpyBuffer[bytes-2] << 8) | cpyBuffer[bytes-1]);
+                            Log.d("BOTZ ", " " + BOTZ);
+
                             bluetoothHandler.obtainMessage(1, bytes, -1, cpyBuffer).sendToTarget();
-                            db.createPosture(System.currentTimeMillis(), ((buffer[bytes-19] << 8) | buffer[bytes-18]), ((buffer[bytes-17] << 8) | buffer[bytes-16]), buffer[bytes-15], buffer[bytes-14], buffer[bytes-13], ((buffer[bytes-12] << 8) | buffer[bytes-11]), ((buffer[bytes-10] << 8) | buffer[bytes-9]), ((buffer[bytes-8] << 8) | buffer[bytes-7]), ((buffer[bytes-6] << 8) | buffer[bytes-5]), ((buffer[bytes-4] << 8) | buffer[bytes-3]), ((buffer[bytes-2] << 8) | buffer[bytes-1]));
-                            db.wait(200);
+
+                            db.createPosture(System.currentTimeMillis(), EMG1, EMG2, DEGREEX, DEGREEY, DEGREEZ, TOPX, TOPY, TOPZ, BOTX, BOTY, BOTZ);
+                            thread.wait(50);
                         }
                     } catch (IOException e) {
 
