@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 import java.util.Scanner;
@@ -59,6 +60,8 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     GraphView graph2;
     int x = 0;
     Button btn;
+
+    MySQLiteHelper db;
 
 
     public int[][] EMGdata1 = new int [100][1];  // EMG Data is ... 1 number? not sure.
@@ -312,6 +315,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 //list.setVisibility(View.GONE);
                 btn.setVisibility(View.VISIBLE);
             }
+            db = new MySQLiteHelper(getContext());
         }
     };
 
@@ -341,10 +345,23 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                         int bytes = mmInStream.read(buffer);
                         //Log.i("NumOfBytes", "read nbytes: " + bytes);
 
-                        String readMessage = new String(buffer, 0, bytes);
-                        Log.d("Data from Buffer", readMessage);
-                        bluetoothHandler.obtainMessage(1, bytes, -1, readMessage).sendToTarget();
-
+                        byte[] cpyBuffer = buffer;
+                        Log.d("Number of Bytes ", " " + bytes);
+                        if(bytes >= 19) {
+                            int EMG1;
+                            int EMG2;
+                            int DEGREEX;
+                            int DEGREEY;
+                            int DEGREEZ;
+                            double TOPX;
+                            double TOPY;
+                            double TOPZ;
+                            double BOTX;
+                            double BO
+                            bluetoothHandler.obtainMessage(1, bytes, -1, cpyBuffer).sendToTarget();
+                            db.createPosture(System.currentTimeMillis(), ((buffer[bytes-19] << 8) | buffer[bytes-18]), ((buffer[bytes-17] << 8) | buffer[bytes-16]), buffer[bytes-15], buffer[bytes-14], buffer[bytes-13], ((buffer[bytes-12] << 8) | buffer[bytes-11]), ((buffer[bytes-10] << 8) | buffer[bytes-9]), ((buffer[bytes-8] << 8) | buffer[bytes-7]), ((buffer[bytes-6] << 8) | buffer[bytes-5]), ((buffer[bytes-4] << 8) | buffer[bytes-3]), ((buffer[bytes-2] << 8) | buffer[bytes-1]));
+                            db.wait(200);
+                        }
                     } catch (IOException e) {
 
                 } catch (InterruptedException e) {

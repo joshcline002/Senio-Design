@@ -10,13 +10,13 @@
 
         <com.jjoe64.graphview.GraphView
                 android:layout_width="match_parent"
-                android:layout_weight=""
+                android:layout_height="180dip"
                 android:visibility="visible"
                 android:id="@+id/graph1" />
 
         <com.jjoe64.graphview.GraphView
                 android:layout_width="match_parent"
-                android:layout_height="200dip"
+                android:layout_height="180dip"
                 android:id="@+id/graph2" android:layout_below="@+id/graph1"/>
     <LinearLayout
             android:orientation="horizontal"
