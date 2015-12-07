@@ -154,17 +154,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return REMG;
     }
 
-    public double[] getFORWARDBEND(double startTime, double endTime){
+    public int[] getFORWARDBEND(double startTime, double endTime){
         String selectQuery = "SELECT " + COLUMN_FORWARD_BEND + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         int size = c.getCount();
-        double[] read = new double[size];
+        int[] read = new int[size];
         int i =0;
         //
         if (c.moveToFirst()){
             do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_FORWARD_BEND));
+                read[i] = c.getInt(c.getColumnIndex(COLUMN_FORWARD_BEND));
                 i++;
             } while (c.moveToNext());
         }
@@ -172,17 +172,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return read;
     }
 
-    public double[] getFORWARDCURVE(double startTime, double endTime){
+    public int[] getFORWARDCURVE(double startTime, double endTime){
         String selectQuery = "SELECT " + COLUMN_FORWARD_CURVE + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         int size = c.getCount();
-        double[] read = new double[size];
+        int[] read = new int[size];
         int i =0;
         //
         if (c.moveToFirst()){
             do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_FORWARD_CURVE));
+                read[i] = c.getInt(c.getColumnIndex(COLUMN_FORWARD_CURVE));
                 i++;
             } while (c.moveToNext());
         }
@@ -190,17 +190,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return read;
     }
 
-    public double[] getSIDECURVE(double startTime, double endTime){
+    public int[] getSIDECURVE(double startTime, double endTime){
         String selectQuery = "SELECT " + COLUMN_SIDE_CURVE + " FROM " + TABLE_POSTURE + " WHERE TIMESTAMP > " + startTime + " AND TIMESTAMP < " + endTime;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         int size = c.getCount();
-        double[] read = new double[size];
+        int[] read = new int[size];
         int i =0;
         //
         if (c.moveToFirst()){
             do{
-                read[i] = c.getDouble(c.getColumnIndex(COLUMN_SIDE_CURVE));
+                read[i] = c.getInt(c.getColumnIndex(COLUMN_SIDE_CURVE));
                 i++;
             } while (c.moveToNext());
         }

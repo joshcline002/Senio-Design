@@ -27,6 +27,7 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -86,14 +87,14 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     Handler bluetoothHandler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
-                recDataString.append(msg.obj.toString());
+                //recDataString.append(msg.obj.toString());
                /* series1.appendData(new DataPoint(x, 1), true, 200);//Just Change the Y value Not X
                 series2.appendData(new DataPoint(x, 1), true, 200);
                 series3.appendData(new DataPoint(x, 2), true, 200);
                 series4.appendData(new DataPoint(x, 3), true, 200); */
                // x ++;
 
-                stringtoParse = String.valueOf(recDataString);
+               /*stringtoParse = String.valueOf(recDataString);
                 //Log.d("StringtoParse", stringtoParse);
 
                      int i = 0;
@@ -231,13 +232,32 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
 
 
 
-                     }
+                     }*/
+           // recDataString.delete(0, recDataString.length()); //clear all string data
 
+            byte[] buff = (byte[])msg.obj;
+            int bytes = buff.length;
 
+            int EMG1 = ((buff[bytes-11] << 8) | buff[bytes-10]);
+            Log.d("EMG1 ", " " + EMG1);
+            int EMG2 = ((buff[bytes-9] << 8) | buff[bytes-8]);
+            Log.d("EMG2 ", " " + EMG2);
+            int GYRO_DEGREE_X = buff[bytes-7];
+            Log.d("GYRO DEGREE X ", " " + GYRO_DEGREE_X);
+            int GYRO_DEGREE_Y = buff[bytes-6];
+            Log.d("GYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
+            int GYRO_DEGREE_Z = buff[bytes-5];
+            Log.d("GYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
 
+            series1.appendData(new DataPoint(x, EMG1), true, 200);
+            series2.appendData(new DataPoint(x, EMG2), true, 200);
 
+            series3.appendData(new DataPoint(x, GYRO_DEGREE_X), true, 200);
+            series4.appendData(new DataPoint(x, GYRO_DEGREE_Y), true, 200);
+            series5.appendData(new DataPoint(x, GYRO_DEGREE_Z), true, 200);
 
-            recDataString.delete(0, recDataString.length()); //clear all string data
+            x++;
+
                 }
         };
 
@@ -261,18 +281,28 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         series4 = new LineGraphSeries<DataPoint>();
         series5 = new LineGraphSeries<DataPoint>();
         graph1.setTitle("EMG");
-        graph2.setTitle("IMU");
+        graph2.setTitle("Degrees");
         graph1.addSeries(series1);
-        graph2.addSeries(series2);
+        graph1.addSeries(series2);
+
         graph2.addSeries(series3);
         graph2.addSeries(series4);
+        graph2.addSeries(series5);
+
+        graph1.getViewport().setScrollable(true);
         graph1.getViewport().setScalable(true);
         graph1.getViewport().setMaxX(200);
         graph1.getViewport().setMinX(0);
+        graph1.getLegendRenderer().setVisible(true);
+        graph1.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+
+        graph2.getViewport().setScrollable(true);
         graph2.getViewport().setScalable(true);
         graph2.getViewport().setMaxX(200);
         graph2.getViewport().setMinX(0);
-        graph1.getViewport().setScrollable(true);
+        graph2.getLegendRenderer().setVisible(true);
+        graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+
 
         //EMG1 == green EMG2 == red
         series1.setColor(Color.GREEN);
@@ -282,6 +312,13 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         series3.setColor(Color.BLUE);
         series4.setColor(Color.GREEN);
         series5.setColor(Color.RED);
+
+        series1.setTitle("LEMG");
+        series2.setTitle("REMG");
+
+        series3.setTitle("GyroX");
+        series4.setTitle("GyroY");
+        series5.setTitle("GyroZ");
 
         x =0;
         btn.setOnClickListener(new View.OnClickListener() {
@@ -442,6 +479,5 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
             btSocket.close();
         } catch (IOException e) { }
     }
-
 
 }

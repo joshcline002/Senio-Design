@@ -1,5 +1,6 @@
 package edu.iastate.ece.sd.httpdec1504.kepros;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -26,9 +28,15 @@ public class viewOldData_Fragment extends android.support.v4.app.Fragment {
 
     LineGraphSeries<DataPoint> series1 = new LineGraphSeries<DataPoint>();
     LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>();
+
     LineGraphSeries<DataPoint> series3 = new LineGraphSeries<DataPoint>();
     LineGraphSeries<DataPoint> series4 = new LineGraphSeries<DataPoint>();
     LineGraphSeries<DataPoint> series5 = new LineGraphSeries<DataPoint>();
+
+    LineGraphSeries<DataPoint> series6 = new LineGraphSeries<DataPoint>();
+    LineGraphSeries<DataPoint> series7 = new LineGraphSeries<DataPoint>();
+    LineGraphSeries<DataPoint> series8 = new LineGraphSeries<DataPoint>();
+
     GraphView graph1;
     GraphView graph2;
     int x = 0;
@@ -48,23 +56,71 @@ public class viewOldData_Fragment extends android.support.v4.app.Fragment {
         graph2 = (GraphView) rootview.findViewById(R.id.graph2);
         series1 = new LineGraphSeries<DataPoint>();
         series2 = new LineGraphSeries<DataPoint>();
+
         series3 = new LineGraphSeries<DataPoint>();
         series4 = new LineGraphSeries<DataPoint>();
         series5 = new LineGraphSeries<DataPoint>();
+
+        series6 = new LineGraphSeries<DataPoint>();
+        series7 = new LineGraphSeries<DataPoint>();
+        series8 = new LineGraphSeries<DataPoint>();
         getTime(view);
         graph1.setTitle("EMG");
-        graph2.setTitle("IMU");
+        graph2.setTitle("Degrees");
+
+        //EMG1 == green EMG2 == red
+        series1.setColor(Color.GREEN);
+        series2.setColor(Color.RED);
+
+
+        //DegreeX == BLUE DegreeY == GREEN DegreeZ == RED
+        series3.setColor(Color.BLUE);
+        series4.setColor(Color.GREEN);
+        series5.setColor(Color.RED);
+
+        series6.setColor(Color.BLACK);
+        series7.setColor(Color.CYAN);
+        series8.setColor(Color.MAGENTA);
+
+        series1.setTitle("LEMG");
+        series2.setTitle("REMG");
+
+        series3.setTitle("GyroX");
+        series4.setTitle("GyroY");
+        series5.setTitle("GyroZ");
+
+        series6.setTitle("AccelX");
+        series7.setTitle("AccelY");
+        series8.setTitle("AccelZ");
+
         graph1.addSeries(series1);
-        graph2.addSeries(series2);
+        graph1.addSeries(series2);
+
+
         graph2.addSeries(series3);
         graph2.addSeries(series4);
+        graph2.addSeries(series5);
+
+
+        graph2.addSeries(series6);
+        graph2.addSeries(series7);
+        graph2.addSeries(series8);
+
         graph1.getViewport().setScalable(true);
+        graph1.getViewport().setScrollable(true);
         graph1.getViewport().setMaxX(200);
         graph1.getViewport().setMinX(0);
+        graph1.getLegendRenderer().setVisible(true);
+        graph1.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+
         graph2.getViewport().setScalable(true);
+        graph2.getViewport().setScrollable(true);
         graph2.getViewport().setMaxX(200);
         graph2.getViewport().setMinX(0);
-        graph1.getViewport().setScrollable(true);
+        graph2.getLegendRenderer().setVisible(true);
+        graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+
+
         x =0;
 
         return rootview;
@@ -122,13 +178,22 @@ public class viewOldData_Fragment extends android.support.v4.app.Fragment {
                     int[] DEGREEX = sql.getDEGREEX(startTimeMS, endTimeMS);
                     int[] DEGREEY = sql.getDEGREEY(startTimeMS, endTimeMS);
                     int[] DEGREEZ = sql.getDEGREEZ(startTimeMS, endTimeMS);
+                    int[] SIDECURVE = sql.getSIDECURVE(startTimeMS, endTimeMS);
+                    int[] FORWARDBEND = sql.getFORWARDBEND(startTimeMS, endTimeMS);
+                    int[] FORWARDCURVE = sql.getFORWARDCURVE(startTimeMS, endTimeMS);
 
                 for (int i = 0; i < LEMG.length; i++){
                     series1.appendData(new DataPoint(i, LEMG[i]), true, 200);
                     series2.appendData(new DataPoint(i, REMG[i]), true, 200);
+
                     series3.appendData(new DataPoint(i, DEGREEX[i]), true, 200);
                     series4.appendData(new DataPoint(i, DEGREEY[i]), true, 200);
                     series5.appendData(new DataPoint(i, DEGREEZ[i]), true, 200);
+
+                    series6.appendData(new DataPoint(i, SIDECURVE[i]), true, 200);
+                    series7.appendData(new DataPoint(i, FORWARDBEND[i]), true, 200);
+                    series8.appendData(new DataPoint(i, FORWARDCURVE[i]), true, 200);
+
                 }
             }
         });
