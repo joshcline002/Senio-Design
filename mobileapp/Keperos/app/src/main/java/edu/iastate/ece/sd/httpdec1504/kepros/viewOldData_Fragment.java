@@ -2,6 +2,7 @@ package edu.iastate.ece.sd.httpdec1504.kepros;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class viewOldData_Fragment extends android.support.v4.app.Fragment {
     int x = 0;
     Button btn;
 
-    MySQLiteHelper sql = new MySQLiteHelper(getContext());
+    MySQLiteHelper sql;
 
     long startTimeMS = 0;
     long endTimeMS = 0;
@@ -127,6 +128,7 @@ public class viewOldData_Fragment extends android.support.v4.app.Fragment {
     }
 
     public void getTime(ViewGroup root){
+        sql = new MySQLiteHelper(getContext());
         Button b = (Button) root.findViewById((R.id.get));
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,18 +183,18 @@ public class viewOldData_Fragment extends android.support.v4.app.Fragment {
                     int[] SIDECURVE = sql.getSIDECURVE(startTimeMS, endTimeMS);
                     int[] FORWARDBEND = sql.getFORWARDBEND(startTimeMS, endTimeMS);
                     int[] FORWARDCURVE = sql.getFORWARDCURVE(startTimeMS, endTimeMS);
+                Log.d("System : start : end", System.currentTimeMillis() + " : " + startTimeMS + " : " + endTimeMS);
+                for (int i = 0; i < LEMG.length/10; i++) {
+                    series1.appendData(new DataPoint(i, LEMG[i*10]), true, 200);
+                    series2.appendData(new DataPoint(i, REMG[i*10]), true, 200);
 
-                for (int i = 0; i < LEMG.length; i++){
-                    series1.appendData(new DataPoint(i, LEMG[i]), true, 200);
-                    series2.appendData(new DataPoint(i, REMG[i]), true, 200);
+                    series3.appendData(new DataPoint(i, DEGREEX[i*10]), true, 200);
+                    series4.appendData(new DataPoint(i, DEGREEY[i*10]), true, 200);
+                    series5.appendData(new DataPoint(i, DEGREEZ[i*10]), true, 200);
 
-                    series3.appendData(new DataPoint(i, DEGREEX[i]), true, 200);
-                    series4.appendData(new DataPoint(i, DEGREEY[i]), true, 200);
-                    series5.appendData(new DataPoint(i, DEGREEZ[i]), true, 200);
-
-                    series6.appendData(new DataPoint(i, SIDECURVE[i]), true, 200);
-                    series7.appendData(new DataPoint(i, FORWARDBEND[i]), true, 200);
-                    series8.appendData(new DataPoint(i, FORWARDCURVE[i]), true, 200);
+                    series6.appendData(new DataPoint(i, SIDECURVE[i*10]), true, 200);
+                    series7.appendData(new DataPoint(i, FORWARDBEND[i*10]), true, 200);
+                    series8.appendData(new DataPoint(i, FORWARDCURVE[i*10]), true, 200);
 
                 }
             }

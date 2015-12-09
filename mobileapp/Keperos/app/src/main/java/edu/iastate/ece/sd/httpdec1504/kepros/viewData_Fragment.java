@@ -61,6 +61,7 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     GraphView graph2;
     int x = 0;
     Button btn;
+    boolean notpaused;
 
     MySQLiteHelper db;
 
@@ -87,174 +88,28 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     Handler bluetoothHandler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
-                //recDataString.append(msg.obj.toString());
-               /* series1.appendData(new DataPoint(x, 1), true, 200);//Just Change the Y value Not X
-                series2.appendData(new DataPoint(x, 1), true, 200);
-                series3.appendData(new DataPoint(x, 2), true, 200);
-                series4.appendData(new DataPoint(x, 3), true, 200); */
-               // x ++;
-
-               /*stringtoParse = String.valueOf(recDataString);
-                //Log.d("StringtoParse", stringtoParse);
-
-                     int i = 0;
-                     int y = 0;
-                     String[] tempArray = stringtoParse.split("\\s+");
-                     //  String[] tempArray = stringtoParse.split("\\s+");
-
-                     y = tempArray.length;
-
-                     Scanner scan = new Scanner(stringtoParse);
-                     int tempVal = 0;
-                    // float tempVal = 0;
-                     for (i = 0; i < y ; i++)
-                     {
-                         if(tempArray[i] == null || tempArray[i] == " " || tempArray[i] == "" || tempArray[i] == "\n" || tempArray[i] == "\t"){
-                             // do nothing
-                         }
-                         else{
-                             //tempVal = Float.valueOf(tempArray[i]);
-                             if(tempArray[i] == "")
-                             {
-                                 // do nothing
-                             }
-                             else{
-                                 tempVal = Integer.parseInt(tempArray[i]);
-                                 //Log.d("tempVal", String.valueOf(tempVal));
-                             }
-
-                         }
-
-                         if(tempVal == 999)
-                         {
-                             numberCount = 0; // hits the 9999 value and then starts the number counter to catch data
-                         }
-
-                        // Log.d("dataCount", String.valueOf(dataCount));
-                             switch(numberCount)
-                             {
-                                 case 1:
-                                     // EMG
-                                     if (switchCount == false)
-                                     { //Log.d("EMG DATA ADD", String.valueOf(tempVal));
-                                         EMGdata1[dataCount][0] = tempVal;
-                                         series1.appendData(new DataPoint(x, tempVal), true, 200);
-                                     }else {
-                                         EMGdata2[dataCount][0] = tempVal;
-                                         series1.appendData(new DataPoint(x, tempVal), true, 200);
-                                     }
-                                     break;
-                                 case 2:
-                                     // AcelX
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][0] = tempVal;
-                                         series2.appendData(new DataPoint(x, tempVal), true, 200);
-
-                                     } else {
-                                         IMUdata2[dataCount][0] = tempVal;
-                                         series2.appendData(new DataPoint(x, tempVal), true, 200);
-
-                                     }
-                                     break;
-                                 case 3:
-                                     // AcelY
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][1] = tempVal;
-                                         series3.appendData(new DataPoint(x, tempVal), true, 200);
-
-                                     } else {
-                                         IMUdata2[dataCount][1] = tempVal;
-                                         series3.appendData(new DataPoint(x, tempVal), true, 200);
-
-                                     }
-                                     break;
-                                 case 4:
-                                     // Acel Z
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][2] = tempVal;
-                                         series4.appendData(new DataPoint(x, tempVal), true, 200);
-
-                                     } else {
-                                         IMUdata2[dataCount][2] = tempVal;
-                                         series4.appendData(new DataPoint(x, tempVal), true, 200);
-
-                                     }
-                                     break;
-                                 case 5:
-                                     // Gy X
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][3] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][3] = tempVal;
-                                     }
-                                     break;
-                                 case 6:
-                                     // Gy Y
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][4] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][4] = tempVal;
-                                     }
-                                     break;
-                                 case 7:
-                                     // Gy Z
-                                     if (switchCount == false)
-                                     {IMUdata1[dataCount][5] = tempVal;
-                                     } else {
-                                         IMUdata2[dataCount][5] = tempVal;
-                                     }
-                                     break;
-                                 default:
-                                     // What
-                                     break;
-                             }
-
-                             if(numberCount == 7)
-                             {
-                                 if(switchCount == true)
-                                 {
-                                     Log.d("Parse Array 2", "EMG: " +  String.valueOf(EMGdata2[dataCount][0]) + " ACLx: " + String.valueOf(IMUdata2[dataCount][0])+ " ACLy: " + String.valueOf(IMUdata2[dataCount][1])+ " ACLz: " + String.valueOf(IMUdata2[dataCount][2]) + " GYx: " + String.valueOf(IMUdata2[dataCount][3]) + " GYy: " + String.valueOf(IMUdata2[dataCount][4]) + " GYz: " + String.valueOf(IMUdata2[dataCount][5])  );
-                                 } else
-                                 {
-                                     Log.d("Parse Array 1", "EMG: " +  String.valueOf(EMGdata1[dataCount][0]) + " ACLx: " + String.valueOf(IMUdata1[dataCount][0])+ " ACLy: " + String.valueOf(IMUdata1[dataCount][1])+ " ACLz: " + String.valueOf(IMUdata1[dataCount][2]) + " GYx: " + String.valueOf(IMUdata1[dataCount][3]) + " GYy: " + String.valueOf(IMUdata1[dataCount][4]) + " GYz: " + String.valueOf(IMUdata1[dataCount][5])  );
-                                 }
-                                 dataCount++;
-                                 numberCount = 0;
-                             }
-                             if (dataCount == 100)
-                             {
-                                 dataCount = 0;
-                                 switchCount = !switchCount;
-                             }
-
-                         numberCount++;
-                         x ++;
-
-
-
-                     }*/
-           // recDataString.delete(0, recDataString.length()); //clear all string data
-
-            byte[] buff = (byte[])msg.obj;
-            int bytes = buff.length;
+            int bytes = msg.arg1;
+            byte[] buff = new byte[bytes];
+            buff = (byte[])msg.obj;
+            Log.d("bytes", bytes + "");
 
             int EMG1 = ((buff[bytes-11] << 8) | buff[bytes-10]);
-            Log.d("EMG1 ", " " + EMG1);
+            Log.d("HEMG1 ", " " + EMG1);
             int EMG2 = ((buff[bytes-9] << 8) | buff[bytes-8]);
-            Log.d("EMG2 ", " " + EMG2);
+            Log.d("HEMG2 ", " " + EMG2);
             int GYRO_DEGREE_X = buff[bytes-7];
-            Log.d("GYRO DEGREE X ", " " + GYRO_DEGREE_X);
+            Log.d("HGYRO DEGREE X ", " " + GYRO_DEGREE_X);
             int GYRO_DEGREE_Y = buff[bytes-6];
-            Log.d("GYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
+            Log.d("HGYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
             int GYRO_DEGREE_Z = buff[bytes-5];
-            Log.d("GYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
+            Log.d("HGYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
 
-            series1.appendData(new DataPoint(x, EMG1), true, 200);
-            series2.appendData(new DataPoint(x, EMG2), true, 200);
+            series1.appendData(new DataPoint(x, EMG1), true, 50);
+            series2.appendData(new DataPoint(x, EMG2), true, 50);
 
-            series3.appendData(new DataPoint(x, GYRO_DEGREE_X), true, 200);
-            series4.appendData(new DataPoint(x, GYRO_DEGREE_Y), true, 200);
-            series5.appendData(new DataPoint(x, GYRO_DEGREE_Z), true, 200);
+            series3.appendData(new DataPoint(x, GYRO_DEGREE_X), true, 50);
+            series4.appendData(new DataPoint(x, GYRO_DEGREE_Y), true, 50);
+            series5.appendData(new DataPoint(x, GYRO_DEGREE_Z), true, 50);
 
             x++;
 
@@ -291,14 +146,14 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
 
         graph1.getViewport().setScrollable(true);
         graph1.getViewport().setScalable(true);
-        graph1.getViewport().setMaxX(200);
+        graph1.getViewport().setMaxX(50);
         graph1.getViewport().setMinX(0);
         graph1.getLegendRenderer().setVisible(true);
         graph1.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
 
         graph2.getViewport().setScrollable(true);
         graph2.getViewport().setScalable(true);
-        graph2.getViewport().setMaxX(200);
+        graph2.getViewport().setMaxX(50);
         graph2.getViewport().setMinX(0);
         graph2.getLegendRenderer().setVisible(true);
         graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
@@ -332,10 +187,27 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         return rootview;
     }
 
-    @Override
+   /* @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
+        db = new MySQLiteHelper(getContext());
+        notpaused = true;
+    }*/
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        db = new MySQLiteHelper(getContext());
+        notpaused = true;
     }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        db.close();
+        notpaused = false;
+    }
+
 
     private Thread init = new Thread(){
         @Override
@@ -359,7 +231,6 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 //list.setVisibility(View.GONE);
                 btn.setVisibility(View.VISIBLE);
             }
-            db = new MySQLiteHelper(getContext());
         }
     };
 
@@ -378,48 +249,54 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                 // byte[] buffer = new byte[1024];  // buffer store for the stream
                 // int bytes; // bytes returned from read()
                 while (true) {
-                   // Log.d("Here", "Here");
-                    try {
-                        byte[] buffer = new byte[1024];  // buffer store for the stream
-                        tmpIn = btSocket.getInputStream();
-                        tmpOut = btSocket.getOutputStream();
-                        mmInStream = tmpIn;
-                        mmOutStream = tmpOut;
-                        int bytes = mmInStream.read(buffer);
-                        //Log.i("NumOfBytes", "read nbytes: " + bytes);
+                    //Log.d("Here", "Here");
+                    while(notpaused) {
+                        //Log.d("nowHere", "and here");
+                        try {
+                            byte[] buffer = new byte[1024];  // buffer store for the stream
+                            tmpIn = btSocket.getInputStream();
+                            tmpOut = btSocket.getOutputStream();
+                            mmInStream = tmpIn;
+                            mmOutStream = tmpOut;
+                            int bytes = mmInStream.read(buffer);
+                            //Log.i("NumOfBytes", "read nbytes: " + bytes);
 
-                        byte[] cpyBuffer = buffer;
+                            byte[] cpyBuffer = buffer;
 
-                        Log.d("Number of Bytes ", " " + bytes);
+                            //Log.d("Number of Bytes ", " " + bytes);
 
-                        if(bytes > 10) {
+                            if (bytes > 10) {
 
-                            int EMG1 = ((cpyBuffer[bytes-11] << 8) | cpyBuffer[bytes-10]);
-                            Log.d("EMG1 ", " " + EMG1);
-                            int EMG2 = ((cpyBuffer[bytes-9] << 8) | cpyBuffer[bytes-8]);
-                            Log.d("EMG2 ", " " + EMG2);
-                            int GYRO_DEGREE_X = cpyBuffer[bytes-7];
-                            Log.d("GYRO DEGREE X ", " " + GYRO_DEGREE_X);
-                            int GYRO_DEGREE_Y = cpyBuffer[bytes-6];
-                            Log.d("GYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
-                            int GYRO_DEGREE_Z = cpyBuffer[bytes-5];
-                            Log.d("GYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
-                            int FORWARD_BEND = cpyBuffer[bytes-4];
-                            Log.d("FORWARD BEND ", " " + FORWARD_BEND);
-                            int FORWARD_CURVE = cpyBuffer[bytes-3];
-                            Log.d("FORWARD_CURVE ", " " + FORWARD_CURVE);
-                            int SIDE_CURVE = cpyBuffer[bytes-2];
-                            Log.d("SIDE CURVE ", " " + SIDE_CURVE);
+                                int EMG1 = ((cpyBuffer[bytes - 11] << 8) | cpyBuffer[bytes - 10]);
+                                //Log.d("BTEMG1 ", " " + EMG1);
+                                int EMG2 = ((cpyBuffer[bytes - 9] << 8) | cpyBuffer[bytes - 8]);
+                                //Log.d("BTEMG2 ", " " + EMG2);
+                                int GYRO_DEGREE_X = cpyBuffer[bytes - 7];
+                                //Log.d("BTGYRO DEGREE X ", " " + GYRO_DEGREE_X);
+                                int GYRO_DEGREE_Y = cpyBuffer[bytes - 6];
+                                //Log.d("BTGYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
+                                int GYRO_DEGREE_Z = cpyBuffer[bytes - 5];
+                                //Log.d("BTGYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
+                                int FORWARD_BEND = cpyBuffer[bytes - 4];
+                                //Log.d("BTFORWARD BEND ", " " + FORWARD_BEND);
+                                int FORWARD_CURVE = cpyBuffer[bytes - 3];
+                                //Log.d("BTFORWARD_CURVE ", " " + FORWARD_CURVE);
+                                int SIDE_CURVE = cpyBuffer[bytes - 2];
+                                //Log.d("BTSIDE CURVE ", " " + SIDE_CURVE);
 
-                            bluetoothHandler.obtainMessage(1, bytes, -1, cpyBuffer).sendToTarget();
+                                bluetoothHandler.obtainMessage(1, bytes, -1, cpyBuffer).sendToTarget();
 
-                            db.createPosture(System.currentTimeMillis(), EMG1, EMG2, GYRO_DEGREE_X, GYRO_DEGREE_Y, GYRO_DEGREE_Z, FORWARD_BEND, FORWARD_CURVE, SIDE_CURVE);
-                            thread.wait(50);
+                                db.createPosture(System.currentTimeMillis(), EMG1, EMG2, GYRO_DEGREE_X, GYRO_DEGREE_Y, GYRO_DEGREE_Z, FORWARD_BEND, FORWARD_CURVE, SIDE_CURVE);
+
+                            }
+                            try {
+                                thread.sleep(35);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (IOException e) {
+
                         }
-                    } catch (IOException e) {
-
-                } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
         }
@@ -478,6 +355,24 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
         try {
             btSocket.close();
         } catch (IOException e) { }
+    }
+
+   /* @Override
+    public void onPause(){
+        super.onPause();
+        db.close();
+        notpaused = false;
+    }*/
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        try {
+            btSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
