@@ -91,27 +91,27 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
             int bytes = msg.arg1;
             byte[] buff = new byte[bytes];
             buff = (byte[])msg.obj;
-            Log.d("bytes", bytes + "");
+            //Log.d("bytes", bytes + " " + buff[11] + " " + buff[10]);
+            if(buff[11] == (-1) && buff[10] != -1) {
+                int EMG1 = ((buff[bytes - 11] << 8) | buff[bytes - 10]);
+                //Log.d("HEMG1 ", " " + EMG1);
+                int EMG2 = ((buff[bytes - 9] << 8) | buff[bytes - 8]);
+                //Log.d("HEMG2 ", " " + EMG2);
+                int GYRO_DEGREE_X = buff[bytes - 7];
+                //Log.d("HGYRO DEGREE X ", " " + GYRO_DEGREE_X);
+                int GYRO_DEGREE_Y = buff[bytes - 6];
+                //Log.d("HGYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
+                int GYRO_DEGREE_Z = buff[bytes - 5];
+                //Log.d("HGYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
 
-            int EMG1 = ((buff[bytes-11] << 8) | buff[bytes-10]);
-            Log.d("HEMG1 ", " " + EMG1);
-            int EMG2 = ((buff[bytes-9] << 8) | buff[bytes-8]);
-            Log.d("HEMG2 ", " " + EMG2);
-            int GYRO_DEGREE_X = buff[bytes-7];
-            Log.d("HGYRO DEGREE X ", " " + GYRO_DEGREE_X);
-            int GYRO_DEGREE_Y = buff[bytes-6];
-            Log.d("HGYRO DEGREE Y ", " " + GYRO_DEGREE_Y);
-            int GYRO_DEGREE_Z = buff[bytes-5];
-            Log.d("HGYRO DEGREE Z ", " " + GYRO_DEGREE_Z);
+                series1.appendData(new DataPoint(x, EMG1), true, 50);
+                series2.appendData(new DataPoint(x, EMG2), true, 50);
 
-            series1.appendData(new DataPoint(x, EMG1), true, 50);
-            series2.appendData(new DataPoint(x, EMG2), true, 50);
-
-            series3.appendData(new DataPoint(x, GYRO_DEGREE_X), true, 50);
-            series4.appendData(new DataPoint(x, GYRO_DEGREE_Y), true, 50);
-            series5.appendData(new DataPoint(x, GYRO_DEGREE_Z), true, 50);
-
-            x++;
+                series3.appendData(new DataPoint(x, GYRO_DEGREE_X), true, 50);
+                series4.appendData(new DataPoint(x, GYRO_DEGREE_Y), true, 50);
+                series5.appendData(new DataPoint(x, GYRO_DEGREE_Z), true, 50);
+            }
+                x++;
 
                 }
         };
@@ -204,7 +204,9 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     @Override
     public void onStop(){
         super.onStop();
-        db.close();
+        if(db != null) {
+            db.close();
+        }
         notpaused = false;
     }
 
@@ -283,10 +285,8 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
                                 //Log.d("BTFORWARD_CURVE ", " " + FORWARD_CURVE);
                                 int SIDE_CURVE = cpyBuffer[bytes - 2];
                                 //Log.d("BTSIDE CURVE ", " " + SIDE_CURVE);
-
-                                bluetoothHandler.obtainMessage(1, bytes, -1, cpyBuffer).sendToTarget();
-
                                 db.createPosture(System.currentTimeMillis(), EMG1, EMG2, GYRO_DEGREE_X, GYRO_DEGREE_Y, GYRO_DEGREE_Z, FORWARD_BEND, FORWARD_CURVE, SIDE_CURVE);
+                                bluetoothHandler.obtainMessage(1, bytes, -1, cpyBuffer).sendToTarget();
 
                             }
                             try {
@@ -368,7 +368,9 @@ public class viewData_Fragment extends android.support.v4.app.Fragment {
     public void onDestroy(){
         super.onDestroy();
         try {
-            btSocket.close();
+            if(btSocket != null) {
+                btSocket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
